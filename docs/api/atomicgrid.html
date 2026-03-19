@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>molgrid.atomicgrid &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlinemath": [["$", "$"], ["\\(", "\\)"]], "displaymath": [["$$", "$$"], ["\\[", "\\]"]]}})</script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="molgrid.moleculargrid" href="moleculargrid.html" />
+    <link rel="prev" title="molgrid.molecule" href="molecule.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#complete-api-reference-for-molgrid">Complete API Reference for MolGrid</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="molecule.html">molgrid.molecule</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">molgrid.atomicgrid</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid"><code class="docutils literal notranslate"><span class="pre">AtomicGrid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="moleculargrid.html">molgrid.moleculargrid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prune.html">molgrid.prune</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quadrature.html">molgrid.quadrature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-modules">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#quick-reference">Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API</a></li>
+      <li class="breadcrumb-item active">molgrid.atomicgrid</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/atomicgrid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-molgrid.atomicgrid">
+<span id="molgrid-atomicgrid"></span><h1>molgrid.atomicgrid<a class="headerlink" href="#module-molgrid.atomicgrid" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.atomicgrid.</span></span><span class="sig-name descname"><span class="pre">AtomicGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nshells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nangpts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">110</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nshells</strong> (<em>int</em>)</p></li>
+<li><p><strong>nangpts</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.get_radial_grid">
+<span class="sig-name descname"><span class="pre">get_radial_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid.get_radial_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.get_radial_grid" title="Link to this definition"></a></dt>
+<dd><p>Return radial grid points and weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(radial_points, radial_weights)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.get_angular_grid">
+<span class="sig-name descname"><span class="pre">get_angular_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid.get_angular_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.get_angular_grid" title="Link to this definition"></a></dt>
+<dd><p>Return angular grid points and weights</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(angular_points, angular_weights)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.get_full_grid">
+<span class="sig-name descname"><span class="pre">get_full_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid.get_full_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.get_full_grid" title="Link to this definition"></a></dt>
+<dd><p>Get all the grid points as a list of positions (N x 3) matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Full 3D grid points (nshells * nangpts, 3)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.get_full_weights">
+<span class="sig-name descname"><span class="pre">get_full_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid.get_full_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.get_full_weights" title="Link to this definition"></a></dt>
+<dd><p>Get weights for all grid points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Weights for each grid point</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.center">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">center</span></span><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.center" title="Link to this definition"></a></dt>
+<dd><p>Atomic center position</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.atomic_number">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">atomic_number</span></span><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.atomic_number" title="Link to this definition"></a></dt>
+<dd><p>Atomic number</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.atomicgrid.AtomicGrid.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/atomicgrid.html#AtomicGrid.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.atomicgrid.AtomicGrid.__len__" title="Link to this definition"></a></dt>
+<dd><p>Total number of grid points</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid" title="molgrid.atomicgrid.AtomicGrid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AtomicGrid</span></code></a>(atom[, nshells, nangpts])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p>The <a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid" title="molgrid.atomicgrid.AtomicGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomicGrid</span></code></a> class generates single-atom spherical integration grids by combining:</p>
+<ul class="simple">
+<li><p><strong>Radial quadrature</strong>: Gauss-Chebyshev Rule on [0, ∞)</p></li>
+<li><p><strong>Angular quadrature</strong>: Lebedev Rule on unit sphere</p></li>
+</ul>
+<p>This produces a product grid suitable for integration of spherically symmetric or smooth functions.</p>
+</section>
+<section id="key-methods">
+<h3>Key Methods<a class="headerlink" href="#key-methods" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid.get_full_grid" title="molgrid.atomicgrid.AtomicGrid.get_full_grid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_full_grid()</span></code></a>: Returns grid points in Cartesian coordinates</p></li>
+<li><p><a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid.get_full_weights" title="molgrid.atomicgrid.AtomicGrid.get_full_weights"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_full_weights()</span></code></a>: Returns integration weights</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_radii()</span></code>: Returns radial distances from center</p></li>
+<li><p><a class="reference internal" href="#molgrid.atomicgrid.AtomicGrid.get_angular_grid" title="molgrid.atomicgrid.AtomicGrid.get_angular_grid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_angular_grid()</span></code></a>: Returns angular grid points and weights</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">atomic_symbol</span></code> (str): Chemical element symbol (e.g., ‘H’, ‘C’, ‘N’, ‘O’)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nshells</span></code> (int, optional): Number of radial shells (default: 32)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nangpts</span></code> (int, optional): Number of angular Lebedev points (default: 110)</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">AtomicGrid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Create hydrogen atomic grid</span>
+<span class="n">h_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">110</span><span class="p">)</span>
+
+<span class="c1"># Get grid information</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>      <span class="c1"># Shape: (N, 3)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>  <span class="c1"># Shape: (N,)</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_radii</span><span class="p">()</span>          <span class="c1"># Shape: (N,)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total points: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight sum: </span><span class="si">{</span><span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Grid centered at origin</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">h_grid</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="grid-sizes">
+<h3>Grid Sizes<a class="headerlink" href="#grid-sizes" title="Link to this heading"></a></h3>
+<p>The grid size is determined by:</p>
+<div class="math notranslate nohighlight">
+\[N = n_{\text{shells}} \times n_{\text{angular}}\]</div>
+<p>Common Combinations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nshells=20,</span> <span class="pre">nangpts=50</span></code>: ~1000 points (coarse)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nshells=32,</span> <span class="pre">nangpts=110</span></code>: ~3500 points (medium)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nshells=50,</span> <span class="pre">nangpts=170</span></code>: ~8500 points (fine)</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="molecule.html" class="btn btn-neutral float-left" title="molgrid.molecule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="moleculargrid.html" class="btn btn-neutral float-right" title="molgrid.moleculargrid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

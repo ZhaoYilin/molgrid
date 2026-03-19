@@ -1,3 +1,4 @@
-name: pyqint
+name: molgrid
 dependencies:
   - numpy
+  - scipy

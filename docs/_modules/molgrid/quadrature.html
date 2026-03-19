@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>molgrid.quadrature &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MolGrid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">molgrid.quadrature</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for molgrid.quadrature</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<div class="viewcode-block" id="Lebedev">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.Lebedev">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Lebedev</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct the Lebedev coefficient library&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data/lebedev&#39;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;*.csv&#39;</span><span class="p">)):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;lebedev_&#39;</span><span class="p">):</span>
+                <span class="n">deg</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">npoints</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">deg</span><span class="p">,</span> <span class="s1">&#39;npoints&#39;</span><span class="p">:</span> <span class="n">npoints</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">})</span>
+    
+<div class="viewcode-block" id="Lebedev.get">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.Lebedev.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="s1">&#39;cartesian&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get points and weights for given degree</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            degree: Quadrature degree</span>
+<span class="sd">            coord: &#39;cartesian&#39; (x,y,z) or &#39;spherical&#39; (r,theta,phi)</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            (points, weights)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">deg_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">deg_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">]:</span>
+            <span class="n">avail</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;degree&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Degree </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s2"> not found. Available: </span><span class="si">{</span><span class="n">avail</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">deg_str</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">coord</span> <span class="o">==</span> <span class="s1">&#39;cartesian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">coord</span> <span class="o">==</span> <span class="s1">&#39;spherical&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;coord must be &#39;cartesian&#39; or &#39;spherical&#39;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Lebedev.get_degrees_list">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.Lebedev.get_degrees_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_degrees_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of available degrees&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;degree&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">])</span></div>
+
+    
+<div class="viewcode-block" id="Lebedev.get_npoints_list">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.Lebedev.get_npoints_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_npoints_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of number of points for each degree&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;npoints&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">])</span></div>
+</div>
+
+    
+
+<div class="viewcode-block" id="GaussChebychev">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.GaussChebychev">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GaussChebychev</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct the Gauss-Chebyshev quadrature library&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+        
+<div class="viewcode-block" id="GaussChebychev.finite">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.GaussChebychev.finite">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">finite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nshells</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate Gauss-Chebyshev quadrature on finite interval [-1, 1]</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nshells : int</span>
+<span class="sd">            Number of quadrature points</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x : ndarray</span>
+<span class="sd">            Quadrature points in [-1, 1]</span>
+<span class="sd">        w : ndarray</span>
+<span class="sd">            Quadrature weights (sum = π/2 for second-kind Chebyshev)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Angular spacing: π/(n+1)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">nshells</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Indices: k = 1, 2, ..., n</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nshells</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Chebyshev points: x_k = cos(kπ/(n+1))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span>
+        
+        <span class="c1"># Second-kind Chebyshev weights: ω_k = (π/(n+1)) sin²(kπ/(n+1))</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span></div>
+
+
+<div class="viewcode-block" id="GaussChebychev.semi_infinite">
+<a class="viewcode-back" href="../../api/quadrature.html#molgrid.quadrature.GaussChebychev.semi_infinite">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">semi_infinite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_scale</span><span class="p">,</span> <span class="n">nshells</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate Gauss-Chebyshev quadrature on semi-infinite interval [0, ∞)</span>
+<span class="sd">        </span>
+<span class="sd">        Maps [-1, 1] → [0, ∞) using: r = r_scale * (1 + x) / (1 - x)</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        r_scale : float</span>
+<span class="sd">            Radial scaling factor (e.g., Bragg-Slater radius)</span>
+<span class="sd">        nshells : int</span>
+<span class="sd">            Number of quadrature points</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        r : ndarray</span>
+<span class="sd">            Radial quadrature points in [0, ∞)</span>
+<span class="sd">        w : ndarray</span>
+<span class="sd">            Radial quadrature weights for ∫ f(r) dr</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get Gauss-Chebyshev (second kind) points and weights on [-1, 1]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">w_finite</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">finite</span><span class="p">(</span><span class="n">nshells</span><span class="p">)</span>
+        
+        <span class="c1"># Map from [-1, 1] to [0, ∞)</span>
+        <span class="c1"># r = r_scale * (1 + x) / (1 - x)</span>
+        <span class="c1"># x = -1 → r = 0, x = 1 → r = ∞</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r_scale</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+        
+        <span class="c1"># Jacobian of the transformation: dr/dx</span>
+        <span class="n">jacobian</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">r_scale</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        
+        <span class="c1"># Convert from weighted integral to ordinary integral</span>
+        <span class="c1"># The final weights include the Jacobian and remove the weight function</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w_finite</span> <span class="o">*</span> <span class="n">jacobian</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">w</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

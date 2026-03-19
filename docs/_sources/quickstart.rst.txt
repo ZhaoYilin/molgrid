@@ -1,0 +1,213 @@
+###########
+Quick Start
+###########
+
+This guide will get you up and running with MolGrid in minutes.
+
+Basic Usage
+===========
+
+Creating a Molecular Grid
+--------------------------
+
+The simplest way to create a molecular integration grid:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+
+    # Create a water molecule
+    mol = Molecule([
+        ['O', 0.0, 0.0, 0.0],
+        ['H', 0.9572, 0.0, 0.0],
+        ['H', -0.2390, 0.9265, 0.0],
+    ])
+
+    # Generate molecular grid
+    mol_grid = MolecularGrid(mol)
+    
+    grid_points = mol_grid.get_full_grid()      # (N, 3) array
+    weights = mol_grid.get_full_weights()       # (N,) array
+    print(f"Grid has {len(grid_points)} points")
+
+Customizing Grid Parameters
+----------------------------
+
+You can customize the grid fineness by adjusting shell counts and angular points:
+
+.. code-block:: python
+
+    # Coarser grid (faster computation)
+    coarse_grid = MolecularGrid(mol, nshells=20, nangpts=50)
+    
+    # Finer grid (more accurate)
+    fine_grid = MolecularGrid(mol, nshells=50, nangpts=170)
+
+Using Becke Partitioning
+========================
+
+Apply Becke weighting to obtain atom-specific grid weights:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+
+    mol = Molecule([
+        ['O', 0.0, 0.0, 0.0],
+        ['H', 0.9572, 0.0, 0.0],
+    ])
+
+    mol_grid = MolecularGrid(mol)
+    
+    # Apply Becke partitioning
+    mol_grid.apply_becke_weights()
+    
+    # Get combined weights
+    weights = mol_grid.get_full_weights()
+    
+    # Get atom-specific grids with Becke weights
+    grid_with_weights = mol_grid.get_molecular_grid_with_becke()
+
+Grid Pruning
+============
+
+Remove low-weight grid points to reduce computational cost:
+
+.. code-block:: python
+
+    from molgrid import MolecularGrid
+
+    mol_grid = MolecularGrid(mol)
+    
+    # Apply Becke weights first
+    mol_grid.apply_becke_weights()
+    
+    # Prune grid points below threshold
+    mol_grid.prune_grid(method='becke', threshold=1e-6)
+    
+    pruned_points = mol_grid.get_full_grid()
+    pruned_weights = mol_grid.get_full_weights()
+    print(f"Pruned to {len(pruned_points)} points")
+
+Working with Atomic Grids
+==========================
+
+Create grids for individual atoms:
+
+.. code-block:: python
+
+    from molgrid import AtomicGrid
+
+    # Create grids for different atoms
+    h_grid = AtomicGrid('H', nshells=32, nangpts=110)
+    o_grid = AtomicGrid('O', nshells=40, nangpts=170)
+    c_grid = AtomicGrid('C', nshells=35, nangpts=150)
+
+    # Access grid information
+    h_points = h_grid.get_full_grid()      # Shape: (N_H, 3)
+    h_weights = h_grid.get_full_weights()  # Shape: (N_H,)
+    h_radii = h_grid.get_radii()          # Radial distances from center
+
+Understanding Grid Data
+=======================
+
+Grid Points
+-----------
+
+Grid points are 3D coordinates where function values are evaluated:
+
+.. code-block:: python
+
+    grid = mol_grid.get_full_grid()
+    print(grid.shape)        # (num_points, 3)
+    print(grid[:5, :])       # First 5 points
+
+Weights
+-------
+
+Integration weights determine the relative importance of each grid point:
+
+.. code-block:: python
+
+    weights = mol_grid.get_full_weights()
+    print(weights.shape)     # (num_points,)
+    print(weights.sum())     # Should be ~molecular volume
+    print(weights.min(), weights.max())  # Weight range
+
+Accessing Atomic Information
+=============================
+
+Get properties of individual atoms in the molecular grid:
+
+.. code-block:: python
+
+    mol_grid = MolecularGrid(mol)
+    
+    # Number of atoms
+    natom = mol_grid.natom
+    
+    # Iterate over atomic grids
+    for i, atomic_grid in enumerate(mol_grid.atomic_grids):
+        print(f"Atom {i}: {atomic_grid.natom} points")
+
+Common Patterns
+===============
+
+Integration of a Function
+--------------------------
+
+Numerically integrate a function on the molecular grid:
+
+.. code-block:: python
+
+    import numpy as np
+    from molgrid import MolecularGrid
+
+    mol_grid = MolecularGrid(mol)
+    grid_points = mol_grid.get_full_grid()
+    weights = mol_grid.get_full_weights()
+    
+    # Example: Integrate r^2 (squared distance from origin)
+    r_squared = np.sum(grid_points**2, axis=1)
+    integral = np.sum(weights * r_squared)
+    print(f"∫r² dV = {integral}")
+
+Batch Processing Multiple Molecules
+------------------------------------
+
+Process multiple molecules efficiently:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+
+    molecules = [
+        Molecule([['H', 0, 0, 0], ['H', 0.74, 0, 0]]),
+        Molecule([['O', 0, 0, 0], ['H', 0.96, 0, 0]]),
+    ]
+    
+    grids = []
+    for mol in molecules:
+        grid = MolecularGrid(mol)
+        grid.apply_becke_weights()
+        grids.append(grid)
+
+Tips and Best Practices
+=======================
+
+1. **Grid Convergence**: Start with default parameters and increase ``nshells`` and ``nangpts`` if needed for accuracy
+
+2. **Memory Usage**: For very large molecules, consider using pruned grids to reduce memory footprint
+
+3. **Becke Weighting**: Always apply Becke weights before pruning for physically meaningful weight distributions
+
+4. **Performance**: Use coarser grids for initial exploration, finer grids for final calculations
+
+5. **Atom Ordering**: Grid point indexing matches the atom order in your Molecule definition
+
+Next Steps
+==========
+
+- Explore the :doc:`api/index` for detailed API documentation
+- See the :doc:`examples` page for more advanced usage
+- Check out the test suite in ``test/`` for additional examples

@@ -1,0 +1,66 @@
+=========
+MolGrid
+=========
+
+**MolGrid** is a Python library for constructing and manipulating molecular integration grids. It provides tools for generating atomic grids and combining them into molecular grids with support for Becke partitioning schemes.
+
+.. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+
+Contents
+=========
+
+.. toctree::
+   :maxdepth: 2
+
+   installation
+   quickstart
+   api/index
+   examples
+   license
+
+Key Features
+=============
+
+- **Flexible Grid Generation**: Generate atomic and molecular integration grids using state-of-the-art quadrature rules
+- **Becke Partitioning**: Apply Becke weight partitioning schemes for accurate molecular grid weight distributions
+- **Multiple Quadrature Rules**: Support for Lebedev (angular) and Gauss-Chebyshev (radial) quadrature
+- **Grid Pruning**: Efficiently remove low-weight grid points using customizable thresholds
+- **Pure Python**: Easy to install and use with standard scientific Python tools
+
+Quick Start
+===========
+
+.. code-block:: python
+
+    from molgrid import Molecule, AtomicGrid, MolecularGrid
+    import numpy as np
+
+    # Create a molecule
+    mol = Molecule([
+        ['H', 0.0, 0.0, 0.0],
+        ['O', 1.0, 0.0, 0.0],
+    ])
+
+    # Generate atomic grids
+    h_grid = AtomicGrid('H', nshells=32)
+    o_grid = AtomicGrid('O', nshells=32)
+
+    # Combine into molecular grid with Becke partitioning
+    mol_grid = MolecularGrid([h_grid, o_grid])
+    mol_grid.apply_becke_weights()
+
+    # Access grid data
+    grid_points = mol_grid.get_full_grid()  # Shape: (N, 3)
+    weights = mol_grid.get_full_weights()   # Shape: (N,)
+
+About
+======
+
+MolGrid was developed to provide researchers with an efficient, flexible tool for constructing integration grids in quantum chemistry calculations. It emphasizes code clarity and usability while maintaining computational efficiency.
+
+Indices and Tables
+===================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

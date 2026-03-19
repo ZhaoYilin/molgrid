@@ -1,0 +1,67 @@
+###
+API
+###
+
+Complete API Reference for MolGrid
+===================================
+
+This section provides detailed documentation of the MolGrid Python API.
+
+.. toctree::
+   :maxdepth: 2
+
+   molecule
+   atomicgrid
+   moleculargrid
+   prune
+   quadrature
+
+Core Modules
+============
+
+The MolGrid package consists of five main modules:
+
+- **molecule** (:mod:`molgrid.molecule`): Molecular structure representation
+- **atomicgrid** (:mod:`molgrid.atomicgrid`): Atomic integration grids
+- **moleculargrid** (:mod:`molgrid.moleculargrid`): Molecular integration grids
+- **prune** (:mod:`molgrid.prune`): Becke partitioning for grid weighting
+- **quadrature** (:mod:`molgrid.quadrature`): Quadrature rules (Lebedev, Gauss-Chebyshev)
+
+Quick Reference
+================
+
+Creating Molecules
+-------------------
+
+.. code-block:: python
+
+    from molgrid import Molecule
+    
+    # From atom list
+    mol = Molecule([
+        ['O', 0.0, 0.0, 0.0],
+        ['H', 0.96, 0.0, 0.0],
+    ], charge=0, multiplicity=1)
+
+Generating Grids
+-----------------
+
+.. code-block:: python
+
+    from molgrid import AtomicGrid, MolecularGrid
+    
+    # Atomic grid
+    ag = AtomicGrid('H', nshells=32, nangpts=110)
+    
+    # Molecular grid
+    mg = MolecularGrid(mol, nshells=32, nangpts=110)
+    mg.apply_becke_weights()
+
+Accessing Grid Data
+--------------------
+
+.. code-block:: python
+
+    grid_points = mg.get_full_grid()           # (N, 3) array
+    weights = mg.get_full_weights()            # (N,) array
+    grid_and_weights = mg.get_full_grid_with_weights()  # (N, 4) array

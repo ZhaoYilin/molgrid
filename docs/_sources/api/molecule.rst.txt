@@ -1,0 +1,48 @@
+molgrid.molecule
+================
+
+.. automodule:: molgrid.molecule
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Classes
+-------
+
+.. autosummary::
+
+   ~molgrid.molecule.Element
+   ~molgrid.molecule.Atom
+   ~molgrid.molecule.Molecule
+
+Data Loading
+~~~~~~~~~~~~
+
+The module automatically loads atomic data from CSV files:
+
+- Periodic table properties (atomic number, mass, van der Waals radius, Bragg radius, etc.)
+- Unit conversion factors
+
+Example Usage
+~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    from molgrid.molecule import Molecule, Atom, Element
+    
+    # Get element properties
+    oxygen = Element('O')
+    print(oxygen.atomicnum)  # Atomic number
+    print(oxygen.mass)       # Atomic mass
+    
+    # Create atoms
+    atom = Atom('H', [0, 0, 0])
+    
+    # Create molecule
+    mol = Molecule([
+        ['O', 0.0, 0.0, 0.0],
+        ['H', 0.96, 0.0, 0.0],
+        ['H', -0.24, 0.93, 0.0],
+    ])
+    print(mol.natom)         # Number of atoms
+    print(mol.coords)        # Atomic coordinates

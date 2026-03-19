@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api/index.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-molecular-grid">Creating a Molecular Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customizing-grid-parameters">Customizing Grid Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-becke-partitioning">Using Becke Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grid-pruning">Grid Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-atomic-grids">Working with Atomic Grids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#understanding-grid-data">Understanding Grid Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grid-points">Grid Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weights">Weights</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-atomic-information">Accessing Atomic Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-patterns">Common Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#integration-of-a-function">Integration of a Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#batch-processing-multiple-molecules">Batch Processing Multiple Molecules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tips-and-best-practices">Tips and Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<p>This guide will get you up and running with MolGrid in minutes.</p>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<section id="creating-a-molecular-grid">
+<h3>Creating a Molecular Grid<a class="headerlink" href="#creating-a-molecular-grid" title="Link to this heading"></a></h3>
+<p>The simplest way to create a molecular integration grid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">MolecularGrid</span>
+
+<span class="c1"># Create a water molecule</span>
+<span class="n">mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">([</span>
+    <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mf">0.9572</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2390</span><span class="p">,</span> <span class="mf">0.9265</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">])</span>
+
+<span class="c1"># Generate molecular grid</span>
+<span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+
+<span class="n">grid_points</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>      <span class="c1"># (N, 3) array</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>       <span class="c1"># (N,) array</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Grid has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grid_points</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="customizing-grid-parameters">
+<h3>Customizing Grid Parameters<a class="headerlink" href="#customizing-grid-parameters" title="Link to this heading"></a></h3>
+<p>You can customize the grid fineness by adjusting shell counts and angular points:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coarser grid (faster computation)</span>
+<span class="n">coarse_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Finer grid (more accurate)</span>
+<span class="n">fine_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">170</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-becke-partitioning">
+<h2>Using Becke Partitioning<a class="headerlink" href="#using-becke-partitioning" title="Link to this heading"></a></h2>
+<p>Apply Becke weighting to obtain atom-specific grid weights:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">MolecularGrid</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">([</span>
+    <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mf">0.9572</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">])</span>
+
+<span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+
+<span class="c1"># Apply Becke partitioning</span>
+<span class="n">mol_grid</span><span class="o">.</span><span class="n">apply_becke_weights</span><span class="p">()</span>
+
+<span class="c1"># Get combined weights</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
+
+<span class="c1"># Get atom-specific grids with Becke weights</span>
+<span class="n">grid_with_weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_molecular_grid_with_becke</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="grid-pruning">
+<h2>Grid Pruning<a class="headerlink" href="#grid-pruning" title="Link to this heading"></a></h2>
+<p>Remove low-weight grid points to reduce computational cost:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularGrid</span>
+
+<span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+
+<span class="c1"># Apply Becke weights first</span>
+<span class="n">mol_grid</span><span class="o">.</span><span class="n">apply_becke_weights</span><span class="p">()</span>
+
+<span class="c1"># Prune grid points below threshold</span>
+<span class="n">mol_grid</span><span class="o">.</span><span class="n">prune_grid</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;becke&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+
+<span class="n">pruned_points</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
+<span class="n">pruned_weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pruned to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pruned_points</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="working-with-atomic-grids">
+<h2>Working with Atomic Grids<a class="headerlink" href="#working-with-atomic-grids" title="Link to this heading"></a></h2>
+<p>Create grids for individual atoms:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">AtomicGrid</span>
+
+<span class="c1"># Create grids for different atoms</span>
+<span class="n">h_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">110</span><span class="p">)</span>
+<span class="n">o_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">170</span><span class="p">)</span>
+<span class="n">c_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+
+<span class="c1"># Access grid information</span>
+<span class="n">h_points</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>      <span class="c1"># Shape: (N_H, 3)</span>
+<span class="n">h_weights</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>  <span class="c1"># Shape: (N_H,)</span>
+<span class="n">h_radii</span> <span class="o">=</span> <span class="n">h_grid</span><span class="o">.</span><span class="n">get_radii</span><span class="p">()</span>          <span class="c1"># Radial distances from center</span>
+</pre></div>
+</div>
+</section>
+<section id="understanding-grid-data">
+<h2>Understanding Grid Data<a class="headerlink" href="#understanding-grid-data" title="Link to this heading"></a></h2>
+<section id="grid-points">
+<h3>Grid Points<a class="headerlink" href="#grid-points" title="Link to this heading"></a></h3>
+<p>Grid points are 3D coordinates where function values are evaluated:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>        <span class="c1"># (num_points, 3)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:])</span>       <span class="c1"># First 5 points</span>
+</pre></div>
+</div>
+</section>
+<section id="weights">
+<h3>Weights<a class="headerlink" href="#weights" title="Link to this heading"></a></h3>
+<p>Integration weights determine the relative importance of each grid point:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>     <span class="c1"># (num_points,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>     <span class="c1"># Should be ~molecular volume</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># Weight range</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="accessing-atomic-information">
+<h2>Accessing Atomic Information<a class="headerlink" href="#accessing-atomic-information" title="Link to this heading"></a></h2>
+<p>Get properties of individual atoms in the molecular grid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+
+<span class="c1"># Number of atoms</span>
+<span class="n">natom</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">natom</span>
+
+<span class="c1"># Iterate over atomic grids</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atomic_grid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mol_grid</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Atom </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">atomic_grid</span><span class="o">.</span><span class="n">natom</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="common-patterns">
+<h2>Common Patterns<a class="headerlink" href="#common-patterns" title="Link to this heading"></a></h2>
+<section id="integration-of-a-function">
+<h3>Integration of a Function<a class="headerlink" href="#integration-of-a-function" title="Link to this heading"></a></h3>
+<p>Numerically integrate a function on the molecular grid:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularGrid</span>
+
+<span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">grid_points</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
+
+<span class="c1"># Example: Integrate r^2 (squared distance from origin)</span>
+<span class="n">r_squared</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">grid_points</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">integral</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">r_squared</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;∫r² dV = </span><span class="si">{</span><span class="n">integral</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="batch-processing-multiple-molecules">
+<h3>Batch Processing Multiple Molecules<a class="headerlink" href="#batch-processing-multiple-molecules" title="Link to this heading"></a></h3>
+<p>Process multiple molecules efficiently:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">MolecularGrid</span>
+
+<span class="n">molecules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Molecule</span><span class="p">([[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mf">0.74</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span>
+    <span class="n">Molecule</span><span class="p">([[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span>
+<span class="p">]</span>
+
+<span class="n">grids</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="n">molecules</span><span class="p">:</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">apply_becke_weights</span><span class="p">()</span>
+    <span class="n">grids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="tips-and-best-practices">
+<h2>Tips and Best Practices<a class="headerlink" href="#tips-and-best-practices" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Grid Convergence</strong>: Start with default parameters and increase <code class="docutils literal notranslate"><span class="pre">nshells</span></code> and <code class="docutils literal notranslate"><span class="pre">nangpts</span></code> if needed for accuracy</p></li>
+<li><p><strong>Memory Usage</strong>: For very large molecules, consider using pruned grids to reduce memory footprint</p></li>
+<li><p><strong>Becke Weighting</strong>: Always apply Becke weights before pruning for physically meaningful weight distributions</p></li>
+<li><p><strong>Performance</strong>: Use coarser grids for initial exploration, finer grids for final calculations</p></li>
+<li><p><strong>Atom Ordering</strong>: Grid point indexing matches the atom order in your Molecule definition</p></li>
+</ol>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Explore the <a class="reference internal" href="api/index.html"><span class="doc">API</span></a> for detailed API documentation</p></li>
+<li><p>See the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page for more advanced usage</p></li>
+<li><p>Check out the test suite in <code class="docutils literal notranslate"><span class="pre">test/</span></code> for additional examples</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/index.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

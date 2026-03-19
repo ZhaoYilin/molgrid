@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>molgrid.quadrature &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlinemath": [["$", "$"], ["\\(", "\\)"]], "displaymath": [["$$", "$$"], ["\\[", "\\]"]]}})</script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="prev" title="molgrid.prune" href="prune.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#complete-api-reference-for-molgrid">Complete API Reference for MolGrid</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="molecule.html">molgrid.molecule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomicgrid.html">molgrid.atomicgrid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="moleculargrid.html">molgrid.moleculargrid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prune.html">molgrid.prune</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">molgrid.quadrature</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#molgrid.quadrature.Lebedev"><code class="docutils literal notranslate"><span class="pre">Lebedev</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#molgrid.quadrature.GaussChebychev"><code class="docutils literal notranslate"><span class="pre">GaussChebychev</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#core-modules">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#quick-reference">Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API</a></li>
+      <li class="breadcrumb-item active">molgrid.quadrature</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/quadrature.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-molgrid.quadrature">
+<span id="molgrid-quadrature"></span><h1>molgrid.quadrature<a class="headerlink" href="#module-molgrid.quadrature" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="molgrid.quadrature.Lebedev">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.quadrature.</span></span><span class="sig-name descname"><span class="pre">Lebedev</span></span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.Lebedev" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.quadrature.Lebedev.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cartesian'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.Lebedev.get" title="Link to this definition"></a></dt>
+<dd><p>Get points and weights for given degree</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>degree</strong> – Quadrature degree</p></li>
+<li><p><strong>coord</strong> – ‘cartesian’ (x,y,z) or ‘spherical’ (r,theta,phi)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(points, weights)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.quadrature.Lebedev.get_degrees_list">
+<span class="sig-name descname"><span class="pre">get_degrees_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get_degrees_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.Lebedev.get_degrees_list" title="Link to this definition"></a></dt>
+<dd><p>Get list of available degrees</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.quadrature.Lebedev.get_npoints_list">
+<span class="sig-name descname"><span class="pre">get_npoints_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get_npoints_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.Lebedev.get_npoints_list" title="Link to this definition"></a></dt>
+<dd><p>Get list of number of points for each degree</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="molgrid.quadrature.GaussChebychev">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.quadrature.</span></span><span class="sig-name descname"><span class="pre">GaussChebychev</span></span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.GaussChebychev" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.quadrature.GaussChebychev.finite">
+<span class="sig-name descname"><span class="pre">finite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nshells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev.finite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.GaussChebychev.finite" title="Link to this definition"></a></dt>
+<dd><p>Generate Gauss-Chebyshev quadrature on finite interval [-1, 1]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nshells</strong> (<em>int</em>) – Number of quadrature points</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – Quadrature points in [-1, 1]</p></li>
+<li><p><strong>w</strong> (<em>ndarray</em>) – Quadrature weights (sum = π/2 for second-kind Chebyshev)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.quadrature.GaussChebychev.semi_infinite">
+<span class="sig-name descname"><span class="pre">semi_infinite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nshells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev.semi_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.quadrature.GaussChebychev.semi_infinite" title="Link to this definition"></a></dt>
+<dd><p>Generate Gauss-Chebyshev quadrature on semi-infinite interval [0, ∞)</p>
+<p>Maps [-1, 1] → [0, ∞) using: r = r_scale * (1 + x) / (1 - x)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_scale</strong> (<em>float</em>) – Radial scaling factor (e.g., Bragg-Slater radius)</p></li>
+<li><p><strong>nshells</strong> (<em>int</em>) – Number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial quadrature points in [0, ∞)</p></li>
+<li><p><strong>w</strong> (<em>ndarray</em>) – Radial quadrature weights for ∫ f(r) dr</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="molgrid.quadrature.Lebedev"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lebedev</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id4" title="molgrid.quadrature.GaussChebychev"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GaussChebychev</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<section id="lebedev-quadrature">
+<h3>Lebedev Quadrature<a class="headerlink" href="#lebedev-quadrature" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.quadrature.</span></span><span class="sig-name descname"><span class="pre">Lebedev</span></span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coord</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cartesian'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Get points and weights for given degree</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>degree</strong> – Quadrature degree</p></li>
+<li><p><strong>coord</strong> – ‘cartesian’ (x,y,z) or ‘spherical’ (r,theta,phi)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(points, weights)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">get_degrees_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get_degrees_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Get list of available degrees</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">get_npoints_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#Lebedev.get_npoints_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Get list of number of points for each degree</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>The Lebedev quadrature rule provides high-accuracy integration on the unit sphere. Points and weights are precomputed from the original Lebedev tables.</p>
+<p><strong>Supported Degrees</strong>: 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53, 59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lebedev</span>
+
+<span class="c1"># 50-point Lebedev grid (degree 5)</span>
+<span class="n">leb</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">leb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>        <span class="c1"># (50, 3) array</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">leb</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>       <span class="c1"># (50,) array</span>
+
+<span class="c1"># Cartesian coordinates</span>
+<span class="n">points_xyz</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
+
+<span class="c1"># Spherical coordinates</span>
+<span class="n">points_sph</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="s1">&#39;spherical&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="gauss-chebyshev-quadrature">
+<h3>Gauss-Chebyshev Quadrature<a class="headerlink" href="#gauss-chebyshev-quadrature" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="id4">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.quadrature.</span></span><span class="sig-name descname"><span class="pre">GaussChebychev</span></span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">finite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nshells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev.finite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Generate Gauss-Chebyshev quadrature on finite interval [-1, 1]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nshells</strong> (<em>int</em>) – Number of quadrature points</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – Quadrature points in [-1, 1]</p></li>
+<li><p><strong>w</strong> (<em>ndarray</em>) – Quadrature weights (sum = π/2 for second-kind Chebyshev)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">semi_infinite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nshells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/quadrature.html#GaussChebychev.semi_infinite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Generate Gauss-Chebyshev quadrature on semi-infinite interval [0, ∞)</p>
+<p>Maps [-1, 1] → [0, ∞) using: r = r_scale * (1 + x) / (1 - x)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_scale</strong> (<em>float</em>) – Radial scaling factor (e.g., Bragg-Slater radius)</p></li>
+<li><p><strong>nshells</strong> (<em>int</em>) – Number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>r</strong> (<em>ndarray</em>) – Radial quadrature points in [0, ∞)</p></li>
+<li><p><strong>w</strong> (<em>ndarray</em>) – Radial quadrature weights for ∫ f(r) dr</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>Gauss-Chebyshev quadrature provides integration on semi-infinite intervals, the natural choice for radial integration in atomic grids.</p>
+<p>Two variants are available:</p>
+<p><strong>Finite</strong>: Integration on [-1, 1]</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussChebychev</span>
+
+<span class="c1"># 32-point rule on [-1, 1]</span>
+<span class="n">points</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">GaussChebychev</span><span class="o">.</span><span class="n">finite</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># Integrate f(x) = x^2 on [-1, 1]</span>
+<span class="n">integral</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span> <span class="o">*</span> <span class="n">points</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># ≈ 0.667</span>
+</pre></div>
+</div>
+<p><strong>Semi-Infinite</strong>: Integration on [0, ∞) with exponential scaling</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 32-point rule on [0, ∞) with radial scaling</span>
+<span class="n">points</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">GaussChebychev</span><span class="o">.</span><span class="n">semi_infinite</span><span class="p">(</span><span class="n">r_scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># For atomic radii, typical r_scale values: H=2, C=3, O=3.5, etc.</span>
+</pre></div>
+</div>
+</section>
+<section id="mathematical-details">
+<h3>Mathematical Details<a class="headerlink" href="#mathematical-details" title="Link to this heading"></a></h3>
+<p><strong>Lebedev Points</strong>: Derived from the invariant integration theory on the sphere. They achieve high degree of precision with fewer points than other spherical rules.</p>
+<p><strong>Degree k</strong> Lebedev rule integrates exactly all polynomials of degree ≤ k on the sphere.</p>
+<p><strong>Gauss-Chebyshev Radial Grid</strong>:</p>
+<p>Maps [-1, 1] to [0, ∞) using:</p>
+<div class="math notranslate nohighlight">
+\[r = r_{\text{scale}} \cdot \frac{1 + x}{1 - x}\]</div>
+<p>This transformation concentrates points near the nucleus (where electron density is highest) and decays exponentially at large distances.</p>
+</section>
+<section id="example-spherical-integration">
+<h3>Example: Spherical Integration<a class="headerlink" href="#example-spherical-integration" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lebedev</span><span class="p">,</span> <span class="n">GaussChebychev</span>
+
+<span class="c1"># Integrate r^2 in Cartesian coordinates</span>
+<span class="n">points_r</span><span class="p">,</span> <span class="n">weights_r</span> <span class="o">=</span> <span class="n">GaussChebychev</span><span class="o">.</span><span class="n">semi_infinite</span><span class="p">(</span><span class="n">r_scale</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">points_s</span><span class="p">,</span> <span class="n">weights_s</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="c1"># Spherical grid (product rule)</span>
+<span class="n">all_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">weights_r</span><span class="p">,</span> <span class="n">weights_s</span><span class="p">)</span>
+
+<span class="c1"># Integrate r^2 over all space</span>
+<span class="n">r_squared</span> <span class="o">=</span> <span class="n">points_r</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">integral</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">all_weights</span> <span class="o">*</span> <span class="n">r_squared</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="grid-data-format">
+<h3>Grid Data Format<a class="headerlink" href="#grid-data-format" title="Link to this heading"></a></h3>
+<p>Both Lebedev and Gauss-Chebyshev return tuples of (points, weights):</p>
+<ul class="simple">
+<li><p><strong>points</strong>: ndarray of shape (N, 3) for Lebedev or (N,) for Gauss-Chebyshev</p></li>
+<li><p><strong>weights</strong>: ndarray of shape (N,) representing integration weights</p></li>
+</ul>
+<p>When returned as tuple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">points</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">770</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">770</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># Weights sum to 1 (unit sphere surface area is 4π)</span>
+</pre></div>
+</div>
+</section>
+<section id="see-also">
+<h3>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="atomicgrid.html#molgrid.atomicgrid.AtomicGrid" title="molgrid.atomicgrid.AtomicGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomicGrid</span></code></a>: Uses Lebedev and Gauss-Chebyshev for atomic grids</p></li>
+<li><p>Integration on unit sphere (Lebedev documentation)</p></li>
+<li><p>Gaussian quadrature on semi-infinite intervals (Gauss-Chebyshev)</p></li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading"></a></h3>
+<p>Lebedev, V. I. (1975). Spheres and spherical harmonics quadrature formulas.
+<em>Zhurnal Vychislitel’noi Matematiki i Matematicheskoi Fiziki</em>, 16(2), 293-305.</p>
+<p>Abramowitz, M., &amp; Stegun, I. A. (1964). Handbook of Mathematical Functions.
+National Bureau of Standards, Chapter 25 (Gaussian quadrature formulas).</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prune.html" class="btn btn-neutral float-left" title="molgrid.prune" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+########
+Examples
+########
+
+Examples and Use Cases
+======================
+
+This section provides practical examples demonstrating MolGrid functionality.
+
+Example 1: Water Molecule Grid
+===============================
+
+Create an integration grid for a water molecule:
+
+.. code-block:: python
+
+    import numpy as np
+    from molgrid import Molecule, MolecularGrid
+    
+    # Define water molecule (standard geometry)
+    h2o = Molecule([
+        ['O', 0.0000000000, 0.0000000000, 0.000000],
+        ['H', 0.9572000000, 0.0000000000, 0.000000],
+        ['H', -0.2390000000, 0.9265000000, 0.000000],
+    ])
+    
+    # Generate molecular grid
+    grid = MolecularGrid(h2o, nshells=32, nangpts=110)
+    
+    # Get grid information
+    points = grid.get_full_grid()
+    weights = grid.get_full_weights()
+    
+    print(f"Water grid: {len(points)} points")
+    print(f"Total weight: {weights.sum():.4f}")
+    print(f"Grid center: {points.mean(axis=0)}")
+
+Example 2: Becke Partitioning
+==============================
+
+Apply Becke weighting to analyze atomic contributions:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+    import numpy as np
+    
+    # Create NH2 radical
+    nh2 = Molecule([
+        ['N', 0.0, 0.0, 0.0],
+        ['H', 0.9, 0.0, 0.0],
+        ['H', -0.45, 0.78, 0.0],
+    ])
+    
+    grid = MolecularGrid(nh2)
+    
+    # Apply Becke partitioning
+    grid.apply_becke_weights()
+    weights = grid.get_full_weights()
+    
+    # Analyze atomic weight distribution
+    # Points are ordered: [N grid (3500), H1 grid (2200), H2 grid (2200)]
+    n_pts_per_atom = [3500, 2200, 2200]
+    
+    cur_idx = 0
+    for i, (atom_symbol, n_pts) in enumerate([('N', 3500), ('H1', 2200), ('H2', 2200)]):
+        atom_weights = weights[cur_idx:cur_idx+n_pts]
+        print(f"{atom_symbol}: {atom_weights.mean():.6f} avg weight")
+        cur_idx += n_pts
+
+Example 3: Grid Pruning
+=======================
+
+Reduce grid size by removing low-weight points:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+    import numpy as np
+    
+    mol = Molecule([
+        ['C', 0.0, 0.0, 0.0],
+        ['O', 1.2, 0.0, 0.0],
+    ])
+    
+    grid = MolecularGrid(mol, nshells=40, nangpts=150)
+    
+    # Before pruning
+    n_before = len(grid.get_full_grid())
+    
+    # Apply Becke and prune
+    grid.apply_becke_weights()
+    grid.prune_grid(method='becke', threshold=1e-6)
+    
+    # After pruning
+    n_after = len(grid.get_full_grid())
+    
+    print(f"Points before: {n_before}")
+    print(f"Points after:  {n_after}")
+    print(f"Reduction: {100*(1-n_after/n_before):.1f}%")
+
+Example 4: Numerical Integration
+=================================
+
+Integrate a function over the molecular grid:
+
+.. code-block:: python
+
+    import numpy as np
+    from molgrid import Molecule, MolecularGrid
+    
+    mol = Molecule([
+        ['C', 0.0, 0.0, 0.0],
+        ['H', 1.0, 0.0, 0.0],
+        ['H', -1.0, 0.0, 0.0],
+    ])
+    
+    grid = MolecularGrid(mol)
+    points = grid.get_full_grid()
+    weights = grid.get_full_weights()
+    
+    # Evaluate function: f(r) = exp(-|r|)
+    distances = np.linalg.norm(points, axis=1)
+    function_values = np.exp(-distances)
+    
+    # Compute integral
+    integral = np.sum(weights * function_values)
+    print(f"∫ exp(-r) dV ≈ {integral:.6f}")
+    
+    # Compare with Cartesian basis: r^2
+    r_squared = (points**2).sum(axis=1)
+    integral_r2 = np.sum(weights * r_squared)
+    print(f"∫ r² dV ≈ {integral_r2:.6f}")
+
+Example 5: Density Functional Theory (DFT) Integration
+=======================================================
+
+Setup for a simple DFT calculation:
+
+.. code-block:: python
+
+    import numpy as np
+    from molgrid import Molecule, MolecularGrid
+    
+    def evaluate_basis_functions(points, position, exponent=1.0):
+        """Evaluate primitive Gaussian basis functions."""
+        distances = np.linalg.norm(points - position, axis=1)
+        return np.exp(-exponent * distances**2)
+    
+    # Define molecule
+    h2 = Molecule([
+        ['H', -0.37, 0.0, 0.0],
+        ['H', 0.37, 0.0, 0.0],
+    ])
+    
+    # Generate grid
+    grid = MolecularGrid(h2, nshells=32, nangpts=110)
+    points = grid.get_full_grid()
+    weights = grid.get_full_weights()
+    
+    # Evaluate basis functions
+    phi_1 = evaluate_basis_functions(points, [-0.37, 0, 0])  # On H1
+    phi_2 = evaluate_basis_functions(points, [0.37, 0, 0])   # On H2
+    
+    # Compute overlap integral: <φ1|φ2>
+    overlap = np.sum(weights * phi_1 * phi_2)
+    print(f"<φ1|φ2> = {overlap:.6f}")
+    
+    # Compute kinetic energy integral (simplified)
+    # ∫ φ1 (-∇²) φ2 dV
+    # (In practice, use proper basis function derivatives)
+
+Example 6: Atomic Grid Inspection
+==================================
+
+Examine individual atomic grids:
+
+.. code-block:: python
+
+    from molgrid import AtomicGrid, Molecule, MolecularGrid
+    import matplotlib.pyplot as plt
+    
+    # Create atomic grids
+    h_grid = AtomicGrid('H', nshells=32, nangpts=110)
+    c_grid = AtomicGrid('C', nshells=40, nangpts=150)
+    o_grid = AtomicGrid('O', nshells=40, nangpts=150)
+    
+    # Inspect radial distribution
+    for symbol, grid in [('H', h_grid), ('C', c_grid), ('O', o_grid)]:
+        radii = grid.get_radii()
+        weights = grid.get_full_weights()
+        print(f"{symbol}: radii range [{radii.min():.4f}, {radii.max():.4f}]")
+        print(f"        weight sum {weights.sum():.4f}")
+
+Example 7: Batch Processing
+============================
+
+Process multiple molecules efficiently:
+
+.. code-block:: python
+
+    from molgrid import Molecule, MolecularGrid
+    import numpy as np
+    
+    # Define multiple molecules
+    molecules_data = [
+        ('H2', [['H', 0, 0, 0], ['H', 0.74, 0, 0]]),
+        ('CO', [['C', 0, 0, 0], ['O', 1.13, 0, 0]]),
+        ('HCN', [['H', 0, 0, 0], ['C', 1.06, 0, 0], ['N', 2.16, 0, 0]]),
+    ]
+    
+    grids = {}
+    for name, atoms in molecules_data:
+        mol = Molecule(atoms)
+        mol_grid = MolecularGrid(mol, nshells=32, nangpts=110)
+        mol_grid.apply_becke_weights()
+        grids[name] = mol_grid
+        print(f"{name:5} -> {len(mol_grid.get_full_grid()):5} grid points")
+
+Tips for Examples
+=================
+
+1. **Memory Management**: For large molecules, use coarser grids initially:
+
+   .. code-block:: python
+
+       # Exploration grid (fast)
+       grid = MolecularGrid(mol, nshells=20, nangpts=50)
+       
+       # Production grid (accurate)
+       grid = MolecularGrid(mol, nshells=50, nangpts=170)
+
+2. **Reproducibility**: Set NumPy random seed if needed (though MolGrid is deterministic):
+
+   .. code-block:: python
+
+       import numpy as np
+       np.random.seed(42)  # Ensures reproducible results
+
+3. **Validation**: Always check grid properties:
+
+   .. code-block:: python
+
+       grid = MolecularGrid(mol)
+       weights = grid.get_full_weights()
+       assert np.all(weights > 0), "Some weights are non-positive"
+       assert np.isfinite(weights.sum()), "Weight sum is not finite"
+
+4. **Integration Testing**: Verify grid convergence:
+
+   .. code-block:: python
+
+       for nshells in [20, 32, 50]:
+           grid = MolecularGrid(mol, nshells=nshells)
+           integral = compute_some_integral(grid)
+           print(f"nshells={nshells}: integral={integral:.8f}")
+
+Advanced Topics
+===============
+
+For more advanced usage, see:
+
+- :doc:`api/index` - Complete API documentation
+- Test suite in ``test/`` - Additional examples and edge cases
+- Jupyter notebooks in ``examples/`` - Interactive tutorials

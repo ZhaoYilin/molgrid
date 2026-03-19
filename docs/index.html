@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MolGrid &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MolGrid</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="molgrid">
+<h1>MolGrid<a class="headerlink" href="#molgrid" title="Link to this heading"></a></h1>
+<p><strong>MolGrid</strong> is a Python library for constructing and manipulating molecular integration grids. It provides tools for generating atomic grids and combining them into molecular grids with support for Becke partitioning schemes.</p>
+<img alt="https://img.shields.io/badge/License-Apache%202.0-blue.svg" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" />
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-molgrid">Installing MolGrid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verifying-installation">Verifying Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-becke-partitioning">Using Becke Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#grid-pruning">Grid Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#working-with-atomic-grids">Working with Atomic Grids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#understanding-grid-data">Understanding Grid Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#accessing-atomic-information">Accessing Atomic Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#common-patterns">Common Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#tips-and-best-practices">Tips and Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#complete-api-reference-for-molgrid">Complete API Reference for MolGrid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#core-modules">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#quick-reference">Quick Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples-and-use-cases">Examples and Use Cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-1-water-molecule-grid">Example 1: Water Molecule Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-2-becke-partitioning">Example 2: Becke Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-3-grid-pruning">Example 3: Grid Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-4-numerical-integration">Example 4: Numerical Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-5-density-functional-theory-dft-integration">Example 5: Density Functional Theory (DFT) Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-6-atomic-grid-inspection">Example 6: Atomic Grid Inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-7-batch-processing">Example 7: Batch Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#tips-for-examples">Tips for Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#molgrid-license">MolGrid License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#full-license-text">Full License Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#attribution">Attribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#third-party-licenses">Third-Party Licenses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html#contributing">Contributing</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Flexible Grid Generation</strong>: Generate atomic and molecular integration grids using state-of-the-art quadrature rules</p></li>
+<li><p><strong>Becke Partitioning</strong>: Apply Becke weight partitioning schemes for accurate molecular grid weight distributions</p></li>
+<li><p><strong>Multiple Quadrature Rules</strong>: Support for Lebedev (angular) and Gauss-Chebyshev (radial) quadrature</p></li>
+<li><p><strong>Grid Pruning</strong>: Efficiently remove low-weight grid points using customizable thresholds</p></li>
+<li><p><strong>Pure Python</strong>: Easy to install and use with standard scientific Python tools</p></li>
+</ul>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">molgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">AtomicGrid</span><span class="p">,</span> <span class="n">MolecularGrid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Create a molecule</span>
+<span class="n">mol</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">([</span>
+    <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">])</span>
+
+<span class="c1"># Generate atomic grids</span>
+<span class="n">h_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">o_grid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># Combine into molecular grid with Becke partitioning</span>
+<span class="n">mol_grid</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">([</span><span class="n">h_grid</span><span class="p">,</span> <span class="n">o_grid</span><span class="p">])</span>
+<span class="n">mol_grid</span><span class="o">.</span><span class="n">apply_becke_weights</span><span class="p">()</span>
+
+<span class="c1"># Access grid data</span>
+<span class="n">grid_points</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>  <span class="c1"># Shape: (N, 3)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">mol_grid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>   <span class="c1"># Shape: (N,)</span>
+</pre></div>
+</div>
+</section>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Link to this heading"></a></h2>
+<p>MolGrid was developed to provide researchers with an efficient, flexible tool for constructing integration grids in quantum chemistry calculations. It emphasizes code clarity and usability while maintaining computational efficiency.</p>
+</section>
+<section id="indices-and-tables">
+<h2>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
