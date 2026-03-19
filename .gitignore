@@ -62,3 +62,6 @@ coverage.xml
 *.tmp
 *.swp
 *~
+
+# OS generated files
+.DS_Store
