@@ -104,11 +104,8 @@ pytest test/ -v
 
 ## Documentation
 
-Full documentation is available at [https://molgrid.readthedocs.io](https://molgrid.readthedocs.io).
+Full documentation is available at [https://zhaoyilin.github.io/molgrid/](https://zhaoyilin.github.io/molgrid/).
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
