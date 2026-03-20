@@ -2,19 +2,16 @@ import numpy as np
 
 class Becke:
     def __init__(self, molecule):
-        """Construct Becke grid for a molecule"""
+        """Construct Becke grid for a molecule."""
         self.molecule = molecule
-        self.atoms = molecule.atoms  # Added to store atoms from molecule
 
-    def _weight_function(self, xyzp, do_becke_hetero=True):
+    def _weight_function(self, coord_r):
         """Compute the Becke weight function for a point in space.
 
         Parameters
         ----------
-        xyzp : ndarray
+        coord_r : ndarray
             Point coordinates [x, y, z]
-        do_becke_hetero : bool, optional
-            Whether to apply heteroatomic corrections (default: True)
 
         Returns
         -------
@@ -22,8 +19,8 @@ class Becke:
             List of weights for each atom
         """
         weights = []
-        for ati in self.atoms:
-            weight = self._voronoi_polyhedron(ati, xyzp, do_becke_hetero=do_becke_hetero)
+        for atomA in self.molecule:
+            weight = self._voronoi_polyhedron(atomA, coord_r)
             weights.append(weight)
 
         # Normalize weights so they sum to 1
@@ -33,38 +30,36 @@ class Becke:
 
         return weights
     
-    def _voronoi_polyhedron(self, ati, xyzp, do_becke_hetero=True):
+    def _voronoi_polyhedron(self, atomA, coord_r):
         """Voronoi polyhedron function constructed from the smoothing function.
 
         Parameters
         ----------
-        ati : Atom
+        atomA : Atom
             Reference atom
-        xyzp : ndarray
+        coord_r : ndarray
             Point coordinates [x, y, z]
-        do_becke_hetero : bool, optional
-            Whether to apply heteroatomic corrections (default: True)
 
         Returns
         -------
         float
             Becke weight
         """
-        rip = np.linalg.norm(ati.coordinate - xyzp)
+        rip = np.linalg.norm(atomA.coordinate - coord_r)
         sprod = 1.0
 
-        for atj in self.atoms:
-            if ati == atj:
+        for atomB in self.molecule:
+            if atomA == atomB:
                 continue
 
-            rij = np.linalg.norm(ati.coordinate - atj.coordinate)
-            rjp = np.linalg.norm(atj.coordinate - xyzp)
+            rij = np.linalg.norm(atomA.coordinate - atomB.coordinate)
+            rjp = np.linalg.norm(atomB.coordinate - coord_r)
             mu = (rip - rjp) / rij
 
             # Modify mu based on Becke hetero formulas
-            if do_becke_hetero and hasattr(ati, 'number') and hasattr(atj, 'number'):
-                if ati.number != atj.number:
-                    chi = ati.cov_radius_slater / atj.cov_radius_slater
+            if hasattr(atomA, 'number') and hasattr(atomB, 'number'):
+                if atomA.number != atomB.number:
+                    chi = atomA.cov_radius_slater / atomB.cov_radius_slater
                     u = (chi - 1.0) / (chi + 1.0)
                     a = u / (u**2 - 1)
                     a = min(a, 0.5)

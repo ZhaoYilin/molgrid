@@ -24,15 +24,66 @@ class AtomicGrid:
         self.__chebychev = GaussChebychev()
         
         # Grid attributes
-        self.__rr = None  # radial points
-        self.__rw = None  # radial weights
-        self.__angpts = None  # angular points
-        self.__aw = None  # angular weights
-        
-        # Generate grids
+        self.__radcoords = None  # radial grids coordinates
+        self.__radweights = None  # radial grids weights
+        self.__angcoords = None  # angular grids coordinates
+        self.__angweights = None  # angular grids weights   
+        self.__coords = None # full grids coordinates
+        self.__weights = None # full grids weights
+    
+        # Build the grid upon initialization
+        self.build()  
+                
+    def build(self):
+        """
+        Build and store the full atomic integration grid.
+
+        The routine generates radial and angular sub-grids, combines them into
+        3D Cartesian grid coordinates, and computes spherical volume weights:
+        weight = r^2 * w_radial * 4π * w_angular.
+
+        Notes
+        -----
+        - `self.__coords` and `self.__weights` are written in-place.
+        - `self.__coords` shape is (nshells * nangpts, 3).
+        - `self.__weights` shape is (nshells * nangpts,).
+
+        Returns
+        -------
+        None
+        """
+        # Generate radial and angular grids
         self._generate_radial_grid()
         self._generate_angular_grid()
         
+        
+        radcoord, radial_weights = self.__radcoords, self.__radweights
+        angcoords, angular_weights = self.__angcoords, self.__angweights
+        
+        # Outer product to generate full grid: r_i * angular_points_j
+        coords = np.multiply.outer(radcoord, angcoords)
+        
+        # Reshape to (nshells * nangpts, 3)
+        nshells = len(radcoord)
+        nang = len(angcoords)
+        coords = coords.reshape(nshells * nang, 3)
+        
+        # Add atomic center position
+        center = getattr(self.atom, 'coordinate', np.array([0.0, 0.0, 0.0]))
+        coords = coords + center
+        
+        # In spherical integration, dV = r^2 dr dΩ.
+        # Lebedev weights in this implementation sum to 1, so scale by 4π.
+        radial_weights = radial_weights * (radcoord ** 2)
+        angular_weights = angular_weights * (4.0 * np.pi)
+
+        # Outer product of weights
+        weights = np.multiply.outer(radial_weights, angular_weights)
+        weights = weights.flatten()  # Flatten to 1D array
+
+        self.__coords = coords
+        self.__weights = weights
+                
     def _generate_radial_grid(self):
         """
         Generate radial grid using Gauss-Chebyshev quadrature
@@ -44,7 +95,7 @@ class AtomicGrid:
         r_scale = r_BS_bohr * 0.5 
         
         # Generate radial points and weights
-        self.__rr, self.__rw = self.__chebychev.semi_infinite(r_scale, self.nshells)
+        self.__radcoords, self.__radweights = self.__chebychev.semi_infinite(r_scale, self.nshells)
         
     def _generate_angular_grid(self):
         """
@@ -66,100 +117,87 @@ class AtomicGrid:
         degree = degrees[idx]
         
         # Get angular points (on unit sphere)
-        self.__angpts, self.__aw = self.__lebedev.get(degree, coord='cartesian')
-        
-    def get_radial_grid(self):
-        """
-        Return radial grid points and weights
-        
-        Returns
-        -------
-        tuple
-            (radial_points, radial_weights)
-        """
-        if self.__rr is None or self.__rw is None:
-            self._generate_radial_grid()
-        return self.__rr, self.__rw
-
-    def get_angular_grid(self):
-        """
-        Return angular grid points and weights
-        
-        Returns
-        -------
-        tuple
-            (angular_points, angular_weights)
-        """
-        if self.__angpts is None or self.__aw is None:
-            self._generate_angular_grid()
-        return self.__angpts, self.__aw
-           
-    def get_full_grid(self):
-        """
-        Get all the grid points as a list of positions (N x 3) matrix
-        
-        Returns
-        -------
-        ndarray
-            Full 3D grid points (nshells * nangpts, 3)
-        """
-        # Ensure grids are generated
-        rr, _ = self.get_radial_grid()
-        angpts, _ = self.get_angular_grid()
-        
-        # Outer product to generate full grid: r_i * angular_points_j
-        full_grid = np.multiply.outer(rr, angpts)
-        
-        # Reshape to (nshells * nangpts, 3)
-        nshells = len(rr)
-        nang = len(angpts)
-        full_grid = full_grid.reshape(nshells * nang, 3)
-        
-        # Add atomic center position
-        center = getattr(self.atom, 'coordinate', np.array([0.0, 0.0, 0.0]))
-        full_grid = full_grid + center
-        
-        return full_grid
-    
-    def get_full_weights(self):
-        """
-        Get weights for all grid points
-        
-        Returns
-        -------
-        ndarray
-            Weights for each grid point
-        """
-        # Ensure grids are generated
-        rr, rw = self.get_radial_grid()
-        angpts, aw = self.get_angular_grid()
-        
-        # Weights are product of radial and angular weights
-        nshells = len(rr)
-        nang = len(angpts)
-        
-        # Outer product of weights
-        weights = np.multiply.outer(rw, aw)
-        
-        # Reshape to 1D array
-        return weights.reshape(nshells * nang)
-    
+        self.__angcoords, self.__angweights = self.__lebedev.get(degree, coord='cartesian')
+                   
     @property
     def center(self):
         """Atomic center position"""
         return getattr(self.atom, 'coordinate', np.array([0.0, 0.0, 0.0]))
+ 
+    @property
+    def coords(self):
+        """Full grid coordinates (nshells * nangpts, 3)"""
+        if self.__coords is None:
+            self.build()
+        return self.__coords
     
     @property
-    def atomic_number(self):
-        """Atomic number"""
-        return getattr(self.atom, 'number') 
+    def weights(self):
+        """Full grid weights (nshells * nangpts,)"""
+        if self.__weights is None:
+            self.build()
+        return self.__weights
+    
+    @property
+    def radial_coords(self):
+        """
+        Return radial grid coordinates
+        
+        Returns
+        -------
+        ndarray             
+            Radial coordinates (shape: (nshells, 3))
+        """
+        if self.__radcoords is None:
+            self._generate_radial_grid()
+        return self.__radcoords        
+
+    @property
+    def radial_weights(self):
+        """
+        Return radial grid weights
+
+        Returns
+        -------
+        ndarray
+            Radial weights (shape: (nshells,))
+        """
+        if self.__radweights is None:
+            self._generate_radial_grid()
+        return self.__radweights
+
+    @property
+    def angular_coords(self):
+        """
+        Return angular grid coordinates
+
+        Returns
+        -------
+        ndarray            
+            Angular coordinates (shape: (nangpts, 3))
+        """
+        if self.__angcoords is None:
+            self._generate_angular_grid()
+        return self.__angcoords
+    
+    @property
+    def angular_weights(self):
+        """
+        Return angular grid weights
+
+        Returns
+        -------
+        ndarray
+            Angular weights (shape: (nangpts,))
+        """
+        if self.__angweights is None:
+            self._generate_angular_grid()
+        return self.__angweights
     
     def __len__(self):
-        """Total number of grid points"""
-        rr, _ = self.get_radial_grid()
-        angpts, _ = self.get_angular_grid()
-        return len(rr) * len(angpts)
-    
+        """Total number of atomic grid points."""
+        return self.nshells * self.nangpts
+       
     def __repr__(self):
         return (f"AtomicGrid(atom={getattr(self.atom, 'symbol', 'Unknown')}, "
                 f"nshells={self.nshells}, "

@@ -68,48 +68,41 @@ class GaussChebychev:
         x : ndarray
             Quadrature points in [-1, 1]
         w : ndarray
-            Quadrature weights (sum = π/2 for second-kind Chebyshev)
+            Quadrature weights (sum = pi/2 for second-kind Chebyshev)
         """
-        # Angular spacing: π/(n+1)
         f = np.pi / float(nshells + 1)
-        
-        # Indices: k = 1, 2, ..., n
         z = np.arange(1, nshells + 1)
-        
-        # Chebyshev points: x_k = cos(kπ/(n+1))
         x = np.cos(f * z)
         
-        # Second-kind Chebyshev weights: ω_k = (π/(n+1)) sin²(kπ/(n+1))
+        # Second-kind Chebyshev weights: w_k = (π/(n+1)) sin^2(k*pi/(n+1))
         w = f * np.sin(f * z)**2
         
         return x, w
 
     def semi_infinite(self, r_scale, nshells):
         """
-        Generate Gauss-Chebyshev quadrature on semi-infinite interval [0, ∞)
+        Generate Gauss-Chebyshev quadrature on semi-infinite interval [0, \infty)
         
-        Maps [-1, 1] → [0, ∞) using: r = r_scale * (1 + x) / (1 - x)
+        Maps [-1, 1] to [0, \infty) using: r = r_scale * (1 + x) / (1 - x)
         
         Parameters
         ----------
         r_scale : float
-            Radial scaling factor (e.g., Bragg-Slater radius)
+            Radial scaling factor 
         nshells : int
             Number of quadrature points
             
         Returns
         -------
         r : ndarray
-            Radial quadrature points in [0, ∞)
+            Radial quadrature points in [0, \infty)
         w : ndarray
-            Radial quadrature weights for ∫ f(r) dr
+            Radial quadrature weights for \int f(r) dr
         """
         # Get Gauss-Chebyshev (second kind) points and weights on [-1, 1]
         x, w_finite = self.finite(nshells)
         
-        # Map from [-1, 1] to [0, ∞)
-        # r = r_scale * (1 + x) / (1 - x)
-        # x = -1 → r = 0, x = 1 → r = ∞
+        # Map from [-1, 1] to [0, \infty)
         r = r_scale * (1.0 + x) / (1.0 - x)
         
         # Jacobian of the transformation: dr/dx

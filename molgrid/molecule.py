@@ -95,7 +95,7 @@ class Element:
 
 class Atom(object):
     
-    def __init__(self, element, coordinate: list):
+    def __init__(self, element, coordinate):
         """
         Initialize an atom
         
@@ -126,17 +126,7 @@ class Atom(object):
         
         self.assign_coordinate(coordinate)
 
-    def __eq__(self, other, error=1e-5):
-        """Check if two atoms are equal"""
-        if not isinstance(other, Atom):
-            return False
-        if self.number != other.number:
-            return False
-        if not np.allclose(self.coordinate, other.coordinate, error):
-            return False
-        return True
-
-    def assign_coordinate(self, coordinate: list):
+    def assign_coordinate(self, coordinate):
         """
         Assign coordinates to the atom
         
@@ -157,11 +147,17 @@ class Atom(object):
         if not len(coordinate) == 3:
             raise ValueError("length of the coordinate must be 3")
         self.coordinate = np.array(coordinate, dtype=float)
-    
-    def distance_to(self, other):
-        """Calculate distance to another atom"""
-        return np.linalg.norm(self.coordinate - other.coordinate)
-    
+
+    def __eq__(self, other, error=1e-5):
+        """Check if two atoms are equal"""
+        if not isinstance(other, Atom):
+            return False
+        if self.number != other.number:
+            return False
+        if not np.allclose(self.coordinate, other.coordinate, error):
+            return False
+        return True
+        
     def __repr__(self):
         return f"Atom({self.symbol}, {self.coordinate})"
 
@@ -169,9 +165,8 @@ class Atom(object):
 class Molecule(object):
     """
     Molecule class representing a collection of atoms
-    """
-    
-    def __init__(self, atoms=None, name=None, charge=0, multiplicity=1):
+    """   
+    def __init__(self, atoms=None, charge=0, multiplicity=1):
         """
         Initialize a molecule
         
@@ -179,17 +174,14 @@ class Molecule(object):
         ----------
         atoms : list, optional
             List of Atom objects
-        name : str, optional
-            Molecule name
         charge : int, optional
             Total molecular charge (default: 0)
         multiplicity : int, optional
             Spin multiplicity (default: 1 for singlet)
         """
-        self.name = name if name else "Unnamed"
+        self.atoms = []
         self.charge = charge
         self.multiplicity = multiplicity
-        self.atoms = []
         
         if atoms:
             for atom in atoms:
@@ -217,17 +209,10 @@ class Molecule(object):
         """Get all atomic coordinates as Nx3 array"""
         return np.array([atom.coordinate for atom in self.atoms])
     
-    def get_symbols(self):
-        """Get list of atomic symbols"""
-        return [atom.symbol for atom in self.atoms]
-    
-    def get_atomic_numbers(self):
-        """Get list of atomic numbers"""
-        return [atom.number for atom in self.atoms]
-    
-    def get_masses(self):
-        """Get list of atomic masses"""
-        return [atom.mass for atom in self.atoms]
+    @property
+    def mass(self):
+        """Get total molecular mass"""
+        return sum(atom.mass for atom in self.atoms)
     
     def __len__(self):
         return len(self.atoms)
