@@ -197,8 +197,3 @@ class AtomicGrid:
     def __len__(self):
         """Total number of atomic grid points."""
         return self.nshells * self.nangpts
-       
-    def __repr__(self):
-        return (f"AtomicGrid(atom={getattr(self.atom, 'symbol', 'Unknown')}, "
-                f"nshells={self.nshells}, "
-                f"nangpts={self.nangpts})")

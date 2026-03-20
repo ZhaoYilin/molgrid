@@ -137,7 +137,3 @@ class MolecularGrid:
     def __iter__(self):
         """Iterate over underlying atomic grid objects."""
         return iter(self.__atomic_grids)
-
-    def __repr__(self):
-        """String representation of the MolecularGrid."""
-        return (f"MolecularGrid(natoms={len(self.molecule)}, npoints={len(self)})")

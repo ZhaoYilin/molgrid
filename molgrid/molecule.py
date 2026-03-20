@@ -89,10 +89,6 @@ class Element:
         for key, value in data.items():
             setattr(self, key, value)
     
-    def __repr__(self):
-        return f"Element({self.symbol}, {self.number})"
-
-
 class Atom(object):
     
     def __init__(self, element, coordinate):
@@ -158,10 +154,6 @@ class Atom(object):
             return False
         return True
         
-    def __repr__(self):
-        return f"Atom({self.symbol}, {self.coordinate})"
-
-
 class Molecule(object):
     """
     Molecule class representing a collection of atoms
