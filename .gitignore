@@ -25,7 +25,7 @@ ENV/
 sphinx/
 
 # Developer test files
-develop_test/
+developer_test/
 
 # Pytest cache
 .pytest_cache/
