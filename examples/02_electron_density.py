@@ -21,8 +21,8 @@ atoms = [
 ]
 water = Molecule(atoms)
 
-# Create molecular grid with pruning
-mol_grid = MolecularGrid(water, nshells=32, nangpts=110)
+# Create molecular grid with Becke partition
+mol_grid = MolecularGrid(water, nshells=32, nangpts=110, partition_method='becke')
 
 print(f"Molecular grid:")
 print(f"Number of points: {len(mol_grid)}")
