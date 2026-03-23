@@ -21,9 +21,6 @@ venv/
 env/
 ENV/
 
-# Sphinx build
-sphinx/
-
 # Developer test files
 developer_test/
 

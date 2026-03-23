@@ -1,6 +1,6 @@
 import numpy as np
 from molgrid.atomicgrid import AtomicGrid
-from molgrid.prune import Becke
+from molgrid.partition import Becke
 
 
 class MolecularGrid:
@@ -10,7 +10,7 @@ class MolecularGrid:
     Becke partition weights can be applied to distribute grid contributions across atoms.
     """
 
-    def __init__(self, molecule, nshells=32, nangpts=110, prune_method='becke', prune_threshold=1e-6):
+    def __init__(self, molecule, nshells=32, nangpts=110, partition_method='becke'):
         """Initialize the MolecularGrid.
 
         Parameters
@@ -23,12 +23,9 @@ class MolecularGrid:
         nangpts : int or [int], optional
             Number of angular points for each atom (default: 110), If a single int is 
             provided, replicate it for all atoms. Otherwise, use the provided list.
-        prune_method : None or 'becke', optional
-            Method for pruning grid points (default: 'becke'). None disables pruning, 
-            'becke' uses Becke atomic partition weights for pruning. 
-        prune_threshold : float, optional
-            Threshold for pruning grid points (default: 1e-6). Points with weights
-            below this threshold will be removed.
+        partition_method : 'becke', optional
+            Method for partitioning grid points (default: 'becke'). 'becke' uses Becke
+            atomic partition weights for partitioning. 
         """
         # Store molecule object
         self.molecule = molecule
@@ -42,8 +39,7 @@ class MolecularGrid:
         self.nangpts = nangpts  
        
         # Store pruning method and threshold
-        self.prune_method = prune_method
-        self.prune_threshold = prune_threshold
+        self.partition_method = partition_method
          
         # Grid attributes
         self.__atomic_grids = None
@@ -88,47 +84,62 @@ class MolecularGrid:
             for i, atom_i in enumerate(self.molecule)]
 
         # No pruning method specified
-        if self.prune_method is None:
+        if self.partition_method is None:
             # Use all atomic grid coordinates and weights directly
             self.__atomic_grids = atomic_grids
             self.__coords = np.vstack([agrid.coords for agrid in atomic_grids])
             self.__weights = np.hstack([agrid.weights for agrid in atomic_grids])
             return 
+        elif isinstance(self.partition_method, str):
+            self.partition(atomic_grids, self.partition_method)
+        else:
+            raise ValueError("Invalid partition method. Supported: 'becke'.")
         
-        # Use Becke method for pruning
-        elif self.prune_method == 'becke':
+    def partition(self, atomic_grids, partition_method='becke'):
+        """Partition the grid weights based on the specified method.
+        
+        Parameters
+        ----------
+        atomic_grids : [AtomicGrid]
+            List of atomic grids to partition.
+        partition_method : str, optional
+            Partition method to use. Default is 'becke'.
+            
+        Returns
+        -------
+        None
+        
+        Raises
+        ------
+        ValueError
+            If an invalid partition method is specified.
+        """
+        if partition_method == 'becke':
             # Create Becke object for calculating atomic partition weights
             becke = Becke(self.molecule)
-            pruned_coords = []
-            pruned_weights = []
+            partition_weights = []  
 
             # Iterate over each atomic grid
             for i, grid_i in enumerate(atomic_grids):
                 # Calculate Becke weights (atomic partition weights) for each point
-                becke_weights = np.array([becke._weight_function(r)[i] for r in grid_i.coords])
+                W = becke.weight_function(grid_i.coords)  # (Ng, Na)
+                becke_weights = W[:, i]
                 
                 # Adjust original weights by Becke weights
                 adjusted_weights = grid_i.weights * becke_weights
-
-                # Keep points with Becke weights above threshold
-                keep = becke_weights >= self.prune_threshold
-
-                # Collect pruned coordinates and adjusted weights
-                pruned_coords.append(grid_i.coords[keep])
-                pruned_weights.append(adjusted_weights[keep])
                 
                 # Update atomic grid's internal coordinates and adjusted weights
-                grid_i._AtomicGrid__coords = grid_i.coords[keep]
-                grid_i._AtomicGrid__weights = adjusted_weights[keep]
-
+                grid_i._AtomicGrid__weights = adjusted_weights
+                partition_weights.append(adjusted_weights)
+                
+                
             # Update molecular grid coordinates and weights
             self.__atomic_grids = atomic_grids
-            self.__coords = np.vstack(pruned_coords)
-            self.__weights = np.hstack(pruned_weights)
+            self.__coords = np.vstack([agrid.coords for agrid in atomic_grids])
+            self.__weights = np.hstack(partition_weights)
             return
         else:
-            # Raise error for invalid pruning method
-            raise ValueError("Invalid prune method. Supported: None or 'becke'.")
+            raise ValueError("Invalid partition method. Supported: 'becke'.")        
 
     def __len__(self):
         """Total number of grid points."""

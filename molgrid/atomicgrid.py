@@ -72,10 +72,8 @@ class AtomicGrid:
         center = getattr(self.atom, 'coordinate', np.array([0.0, 0.0, 0.0]))
         coords = coords + center
         
-        # In spherical integration, dV = r^2 dr dΩ.
-        # Lebedev weights in this implementation sum to 1, so scale by 4π.
+        # In spherical integration, dV = r^2 dr d\Omega.
         radial_weights = radial_weights * (radcoord ** 2)
-        angular_weights = angular_weights * (4.0 * np.pi)
 
         # Outer product of weights
         weights = np.multiply.outer(radial_weights, angular_weights)
@@ -196,4 +194,6 @@ class AtomicGrid:
     
     def __len__(self):
         """Total number of atomic grid points."""
-        return self.nshells * self.nangpts
+        if self.__coords is None:
+            self.build()
+        return len(self.__coords)

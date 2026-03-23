@@ -33,7 +33,7 @@ def test_lebedev_get():
         coords, weights = lebedev.get(degree, coord='cartesian')
         assert coords.shape[1] == 3  # Cartesian coordinates are 3-dimensional
         assert len(coords) == len(weights)
-        assert np.isclose(np.sum(weights), 1.0)  # Weights should sum to 1
+        assert np.isclose(np.sum(weights), 4*np.pi)  # Weights should sum to 4\pi
 
 def test_gauss_chebychev_creation():
     """Test GaussChebychev class creation"""

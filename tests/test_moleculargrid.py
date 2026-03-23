@@ -4,8 +4,8 @@ from molgrid.molecule import Atom
 from molgrid.moleculargrid import MolecularGrid
 
 
-def test_moleculargrid_without_prune():
-    """Test MolecularGrid class without prune"""
+def test_moleculargrid_without_partition():
+    """Test MolecularGrid class without partition"""
     # Create water molecule
     atoms = [
         Atom('O', [0.0, 0.0, 0.0]),
@@ -13,14 +13,14 @@ def test_moleculargrid_without_prune():
         Atom('H', [0.0, 0.757, 0.587])
     ]
     
-    # Create molecular grid without pruning
-    grid = MolecularGrid(atoms, nshells=10, nangpts=110, prune_method=None)
+    # Create molecular grid without partition
+    grid = MolecularGrid(atoms, nshells=10, nangpts=110, partition_method=None)
     original_size = len(grid)
     # Ensure grid size matches expected value
     assert original_size == 3 * 10 * 110
     
-def test_moleculargrid_with_prune():
-    """Test MolecularGrid class with prune"""
+def test_moleculargrid_with_partition():
+    """Test MolecularGrid class with partition"""
     # Create water molecule
     atoms = [
         Atom('O', [0.0, 0.0, 0.0]),
@@ -29,9 +29,9 @@ def test_moleculargrid_with_prune():
     ]
     
     # Create molecular grid
-    grid = MolecularGrid(atoms, nshells=10, nangpts=110, prune_method='becke')
+    grid = MolecularGrid(atoms, nshells=10, nangpts=110, partition_method='becke')
    
-    # Test pruning reduces the number of grid points
+    # Test partition reduces the number of grid points  
     assert len(grid) <= 3 * 10 * 110  # 3 atoms * 10 shells * 110 angular points
     assert len(grid) > 0  # Ensure there is at least one grid point
 
@@ -68,7 +68,7 @@ def test_moleculargrid_with_different_shells():
     nangpts = 110
     
     # Create molecular grid
-    grid = MolecularGrid(atoms, nshells=nshells, nangpts=nangpts, prune_method=None)
+    grid = MolecularGrid(atoms, nshells=nshells, nangpts=nangpts, partition_method=None)
     
     # Calculate expected grid size
     expected_size = 10 * 110 + 5 * 110 + 5 * 110

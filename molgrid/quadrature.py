@@ -33,10 +33,11 @@ class Lebedev:
         
         data = np.loadtxt([d['file'] for d in self._data if d['degree'] == deg_str][0], delimiter=',', skiprows=1)
         
+        # Lebedev weights in data sum to 1, so scale by 4\pi. 
         if coord == 'cartesian':
-            return data[:, 3:6], data[:, 6]
+            return data[:, 3:6], data[:, 6] * 4 * np.pi
         elif coord == 'spherical':
-            return data[:, 0:3], data[:, 6]
+            return data[:, 0:3], data[:, 6] * 4 * np.pi
         else:
             raise ValueError("coord must be 'cartesian' or 'spherical'")
 

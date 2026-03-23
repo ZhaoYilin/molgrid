@@ -197,7 +197,8 @@ class Molecule(object):
             raise IndexError(f"Atom index {index} out of range")
         return self.atoms[index]
     
-    def get_coordinates(self):
+    @property
+    def coordinate(self):
         """Get all atomic coordinates as Nx3 array"""
         return np.array([atom.coordinate for atom in self.atoms])
     
