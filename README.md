@@ -4,13 +4,13 @@ MolGrid: A Python library for generating real-space finite grids for DFT calcula
 
 ## Overview
 
-MolGrid is a lightweight Python library designed to generate high-quality real-space integration grids for density functional theory (DFT) calculations. It provides a flexible framework for creating atomic and molecular grids, with support for Becke grid pruning to optimize computational efficiency.
+MolGrid is a lightweight Python library designed to generate high-quality real-space integration grids for density functional theory (DFT) calculations. It provides a flexible framework for creating atomic and molecular grids, with support for Becke grid partition to optimize computational efficiency.
 
 ## Features
 
 - **Atomic Grids**: Generate radial and angular grids for individual atoms
 - **Molecular Grids**: Combine atomic grids to form molecular integration grids
-- **Becke Pruning**: Optimize grid points using Becke atomic partition weights
+- **Becke Partition**: Optimize grid points using Becke atomic partition weights
 - **Flexible Parameters**: Customize radial shells and angular points for each atom
 - **Integration Support**: Calculate electron density and other properties on the grid
 - **PySCF Integration**: Compatible with PySCF for electronic structure calculations
@@ -45,8 +45,8 @@ hydrogen2 = Atom('H', [0.0, 0.757, 0.587])
 # Create molecule
 water = Molecule([oxygen, hydrogen1, hydrogen2])
 
-# Create molecular grid with Becke pruning
-mol_grid = MolecularGrid(water, nshells=32, nangpts=110, prune_method='becke', prune_threshold=1e-3)
+# Create molecular grid with Becke partition
+mol_grid = MolecularGrid(water, nshells=32, nangpts=110, partition_method='becke')
 
 print(f"Molecular grid points: {len(mol_grid)}")
 print(f"Coordinates shape: {mol_grid.coords.shape}")
@@ -83,15 +83,13 @@ print(f"Number of electrons: {number_of_electrons:.6f}")
 The `examples` directory contains several example scripts:
 
 - `01_basic_usage.py`: Basic usage of the library
-- `02_grid_pruning.py`: Grid pruning with Becke method
-- `03_electron_density.py`: Electron density calculation and integration
+- `02_electron_density.py`: Electron density calculation and integration
 
 To run the examples:
 
 ```bash
 python examples/01_basic_usage.py
-python examples/02_grid_pruning.py
-python examples/03_electron_density.py
+python examples/02_electron_density.py
 ```
 
 ## Testing
