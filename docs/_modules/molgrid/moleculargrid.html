@@ -8,8 +8,10 @@
   <title>molgrid.moleculargrid &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=01f34227"></script>
@@ -28,8 +30,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            MolGrid
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,12 +42,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">molgrid</a></li>
 </ul>
 
         </div>
@@ -74,187 +80,162 @@
   <h1>Source code for molgrid.moleculargrid</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.atomicgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">AtomicGrid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.prune</span><span class="w"> </span><span class="kn">import</span> <span class="n">Becke</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.partition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Becke</span>
 
 
 <div class="viewcode-block" id="MolecularGrid">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MolecularGrid</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a molecular integration grid by combining atomic grids.</span>
 
 <span class="sd">    Each atom produces a radial/angular grid via :class:`~molgrid.atomicgrid.AtomicGrid`.</span>
-<span class="sd">    Becke partition weights can be applied to distribute grid contributions across</span>
-<span class="sd">    atoms.</span>
+<span class="sd">    Becke partition weights can be applied to distribute grid contributions across atoms.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">110</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">partition_method</span><span class="o">=</span><span class="s1">&#39;becke&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the MolecularGrid.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        atoms : list or Molecule</span>
-<span class="sd">            List of :class:`~molgrid.molecule.Atom` objects or a :class:`~molgrid.molecule.Molecule`.</span>
-<span class="sd">        nshells : int, optional</span>
-<span class="sd">            Number of radial shells for each atom (default: 32)</span>
-<span class="sd">        nangpts : int, optional</span>
-<span class="sd">            Number of angular points for each atom (default: 110)</span>
+<span class="sd">        molecule : Molecule</span>
+<span class="sd">            A Molecule object containing atomic information.</span>
+<span class="sd">        nshells : int or [int], optional</span>
+<span class="sd">            Number of radial shells for each atom (default: 32), If a single int is </span>
+<span class="sd">            provided, replicate it for all atoms. Otherwise, use the provided list.</span>
+<span class="sd">        nangpts : int or [int], optional</span>
+<span class="sd">            Number of angular points for each atom (default: 110), If a single int is </span>
+<span class="sd">            provided, replicate it for all atoms. Otherwise, use the provided list.</span>
+<span class="sd">        partition_method : &#39;becke&#39;, optional</span>
+<span class="sd">            Method for partitioning grid points (default: &#39;becke&#39;). &#39;becke&#39; uses Becke</span>
+<span class="sd">            atomic partition weights for partitioning. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># If a Molecule is provided, extract its atom list.</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="s1">&#39;atoms&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">atoms</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Allow any iterable of Atoms</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="c1"># Store molecule object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span>
 
+        <span class="c1"># Number of radial shells and angular points </span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nshells</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">nshells</span> <span class="o">=</span> <span class="p">[</span><span class="n">nshells</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nangpts</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">nangpts</span> <span class="o">=</span> <span class="p">[</span><span class="n">nangpts</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nshells</span> <span class="o">=</span> <span class="n">nshells</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nangpts</span> <span class="o">=</span> <span class="n">nangpts</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span> <span class="o">=</span> <span class="p">[</span><span class="n">AtomicGrid</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">nshells</span><span class="p">,</span> <span class="n">nangpts</span><span class="p">)</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span>
-        
-        <span class="c1"># Store grid points with weights for each atomic grid</span>
-        <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="c1"># Add weight column to points array (assuming points are [x, y, z])</span>
-            <span class="c1"># If AtomicGrid stores points differently, adjust accordingly</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agrid</span><span class="p">,</span> <span class="s1">&#39;points_with_weights&#39;</span><span class="p">):</span>
-                <span class="n">points</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
-                <span class="n">weights</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
-                <span class="c1"># Store as [x, y, z, weight] for each point</span>
-                <span class="n">agrid</span><span class="o">.</span><span class="n">points_with_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">points</span><span class="p">,</span> <span class="n">weights</span><span class="p">])</span>
-        
-<div class="viewcode-block" id="MolecularGrid.get_full_grid">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_grid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_full_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combine atomic grids into a full molecular grid (points only).&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">agrid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nangpts</span> <span class="o">=</span> <span class="n">nangpts</span>  
+       
+        <span class="c1"># Store pruning method and threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">partition_method</span> <span class="o">=</span> <span class="n">partition_method</span>
+         
+        <span class="c1"># Grid attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atomic_grids</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="o">=</span> <span class="kc">None</span>
 
+        <span class="c1"># Build the grid upon initialization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MolecularGrid.get_full_weights">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_weights">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_full_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combine atomic weights into a full molecular weight array.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,))</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">agrid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">])</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cached full grid coordinates.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cached full grid weights.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span>
 
-<div class="viewcode-block" id="MolecularGrid.get_full_grid_with_weights">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_grid_with_weights">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_full_grid_with_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combine atomic grids into a full molecular grid with weights [x, y, z, weight].&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-        <span class="n">full_data</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="n">points</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
-            <span class="n">weights</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
-            <span class="n">full_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">points</span><span class="p">,</span> <span class="n">weights</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span></div>
-
-    
-<div class="viewcode-block" id="MolecularGrid.prune_grid">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.prune_grid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">prune_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;becke&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prune grid points with weights below a certain threshold.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        method : str, optional</span>
-<span class="sd">            Method to use when determining weights. Supported values are:</span>
-<span class="sd">            - &#39;becke&#39;: use Becke partition weights (default)</span>
-<span class="sd">            - any other value: use raw atomic grid weights</span>
-<span class="sd">        threshold : float, optional</span>
-<span class="sd">            Weight threshold for pruning points</span>
-
+<div class="viewcode-block" id="MolecularGrid.build">
+<a class="viewcode-back" href="../../api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.build">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build each atomic grid and refresh cached molecular grid.</span>
+<span class="sd">        </span>
+<span class="sd">        This method constructs atomic grids for each atom in the molecule and</span>
+<span class="sd">        optionally prunes the grid points based on the specified pruning method.</span>
+<span class="sd">        </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        tuple</span>
-<span class="sd">            (filtered_points, filtered_weights)</span>
+<span class="sd">        None</span>
+<span class="sd">            Modifies the grid in place by building and optionally pruning the grid.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If an invalid prune method is specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;becke&#39;</span><span class="p">:</span>
-            <span class="n">grid_with_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_molecular_grid_with_becke</span><span class="p">()</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">grid_with_weights</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span>
-            <span class="k">return</span> <span class="n">grid_with_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">grid_with_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="c1"># Build atomic grids for each atom in the molecule</span>
+        <span class="n">atomic_grids</span> <span class="o">=</span> <span class="p">[</span><span class="n">AtomicGrid</span><span class="p">(</span><span class="n">atom_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nshells</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">nangpts</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atom_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">)]</span>
 
-        <span class="n">full_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
-        <span class="n">full_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">full_weights</span> <span class="o">&gt;</span> <span class="n">threshold</span>
-        <span class="k">return</span> <span class="n">full_grid</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">full_weights</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div>
+        <span class="c1"># No pruning method specified</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">partition_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Use all atomic grid coordinates and weights directly</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__atomic_grids</span> <span class="o">=</span> <span class="n">atomic_grids</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">agrid</span><span class="o">.</span><span class="n">coords</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="n">atomic_grids</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">agrid</span><span class="o">.</span><span class="n">weights</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="n">atomic_grids</span><span class="p">])</span>
+            <span class="k">return</span> 
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">partition_method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">atomic_grids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">partition_method</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid partition method. Supported: &#39;becke&#39;.&quot;</span><span class="p">)</span></div>
 
-    
-<div class="viewcode-block" id="MolecularGrid.apply_becke_weights">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.apply_becke_weights">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply_becke_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply Becke partition weights to all atomic grids.</span>
-
-<span class="sd">        This updates each atomic grid&#39;s `points_with_weights` array so that the</span>
-<span class="sd">        fourth column contains weights scaled by the Becke partition function.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        do_becke_hetero : bool, optional</span>
-<span class="sd">            Whether to use Becke&#39;s heteroatomic correction (default: True)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="n">becke</span> <span class="o">=</span> <span class="n">Becke</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">iat</span><span class="p">,</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">):</span>
-            <span class="n">points</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_grid</span><span class="p">()</span>
-            <span class="n">weights</span> <span class="o">=</span> <span class="n">agrid</span><span class="o">.</span><span class="n">get_full_weights</span><span class="p">()</span>
-
-            <span class="c1"># Compute Becke partition weights for each point and select the</span>
-            <span class="c1"># contribution for this atomic grid.</span>
-            <span class="n">becke_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">becke</span><span class="o">.</span><span class="n">_weight_function</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="n">do_becke_hetero</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
-            <span class="p">)</span>
-
-            <span class="n">agrid</span><span class="o">.</span><span class="n">points_with_weights</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">*</span> <span class="n">becke_weights</span><span class="p">[:,</span> <span class="n">iat</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="MolecularGrid.get_molecular_grid_with_becke">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_molecular_grid_with_becke">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_molecular_grid_with_becke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get molecular grid with Becke weights applied</span>
+        
+<div class="viewcode-block" id="MolecularGrid.partition">
+<a class="viewcode-back" href="../../api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.partition">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_grids</span><span class="p">,</span> <span class="n">partition_method</span><span class="o">=</span><span class="s1">&#39;becke&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Partition the grid weights based on the specified method.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        do_becke_hetero : bool, optional</span>
-<span class="sd">            Whether to use Becke&#39;s heteroatomic correction</span>
+<span class="sd">        atomic_grids : [AtomicGrid]</span>
+<span class="sd">            List of atomic grids to partition.</span>
+<span class="sd">        partition_method : str, optional</span>
+<span class="sd">            Partition method to use. Default is &#39;becke&#39;.</span>
 <span class="sd">            </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ndarray</span>
-<span class="sd">            Grid points with Becke weights [x, y, z, weight]</span>
+<span class="sd">        None</span>
+<span class="sd">        </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If an invalid partition method is specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Apply Becke weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">apply_becke_weights</span><span class="p">(</span><span class="n">do_becke_hetero</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">partition_method</span> <span class="o">==</span> <span class="s1">&#39;becke&#39;</span><span class="p">:</span>
+            <span class="c1"># Create Becke object for calculating atomic partition weights</span>
+            <span class="n">becke</span> <span class="o">=</span> <span class="n">Becke</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">)</span>
+            <span class="n">partition_weights</span> <span class="o">=</span> <span class="p">[]</span>  
 
-        <span class="c1"># Collect all points with weights</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="c1"># Iterate over each atomic grid</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">grid_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atomic_grids</span><span class="p">):</span>
+                <span class="c1"># Calculate Becke weights (atomic partition weights) for each point</span>
+                <span class="n">W</span> <span class="o">=</span> <span class="n">becke</span><span class="o">.</span><span class="n">weight_function</span><span class="p">(</span><span class="n">grid_i</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>  <span class="c1"># (Ng, Na)</span>
+                <span class="n">becke_weights</span> <span class="o">=</span> <span class="n">W</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+                
+                <span class="c1"># Adjust original weights by Becke weights</span>
+                <span class="n">adjusted_weights</span> <span class="o">=</span> <span class="n">grid_i</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">becke_weights</span>
+                
+                <span class="c1"># Update atomic grid&#39;s internal coordinates and adjusted weights</span>
+                <span class="n">grid_i</span><span class="o">.</span><span class="n">_AtomicGrid__weights</span> <span class="o">=</span> <span class="n">adjusted_weights</span>
+                <span class="n">partition_weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adjusted_weights</span><span class="p">)</span>
+                
+                
+            <span class="c1"># Update molecular grid coordinates and weights</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__atomic_grids</span> <span class="o">=</span> <span class="n">atomic_grids</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">agrid</span><span class="o">.</span><span class="n">coords</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="n">atomic_grids</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">partition_weights</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid partition method. Supported: &#39;becke&#39;.&quot;</span><span class="p">)</span>        </div>
 
-        <span class="n">all_points_with_weights</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">:</span>
-            <span class="n">all_points_with_weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agrid</span><span class="o">.</span><span class="n">points_with_weights</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">all_points_with_weights</span><span class="p">)</span></div>
-
-    
-<div class="viewcode-block" id="MolecularGrid.__len__">
-<a class="viewcode-back" href="../../api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.__len__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of grid points&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agrid</span><span class="p">)</span> <span class="k">for</span> <span class="n">agrid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atomic_grids</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of grid points.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__weights</span><span class="p">)</span>
 
-    
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MolecularGrid(natoms=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;nshells=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nshells</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;nangpts=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nangpts</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;npoints=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over underlying atomic grid objects.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__atomic_grids</span><span class="p">)</span></div>
 
 </pre></div>
 

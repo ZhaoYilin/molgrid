@@ -1,0 +1,7 @@
+molgrid.prune module
+====================
+
+.. automodule:: molgrid.prune
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -8,8 +8,10 @@
   <title>molgrid.atomicgrid &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=01f34227"></script>
@@ -28,8 +30,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            MolGrid
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,12 +42,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">molgrid</a></li>
 </ul>
 
         </div>
@@ -76,7 +82,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lebedev</span><span class="p">,</span> <span class="n">GaussChebychev</span>
 
 <div class="viewcode-block" id="AtomicGrid">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AtomicGrid</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">nshells</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">nangpts</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">110</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -100,15 +106,67 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__chebychev</span> <span class="o">=</span> <span class="n">GaussChebychev</span><span class="p">()</span>
         
         <span class="c1"># Grid attributes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__rr</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># radial points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__rw</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># radial weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__angpts</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># angular points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__aw</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># angular weights</span>
-        
-        <span class="c1"># Generate grids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__radcoords</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># radial grids coordinates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__radweights</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># radial grids weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__angcoords</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># angular grids coordinates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__angweights</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># angular grids weights   </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># full grids coordinates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># full grids weights</span>
+    
+        <span class="c1"># Build the grid upon initialization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>  
+                
+<div class="viewcode-block" id="AtomicGrid.build">
+<a class="viewcode-back" href="../../api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.build">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build and store the full atomic integration grid.</span>
+
+<span class="sd">        The routine generates radial and angular sub-grids, combines them into</span>
+<span class="sd">        3D Cartesian grid coordinates, and computes spherical volume weights:</span>
+<span class="sd">        weight = r^2 * w_radial * 4π * w_angular.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        - `self.__coords` and `self.__weights` are written in-place.</span>
+<span class="sd">        - `self.__coords` shape is (nshells * nangpts, 3).</span>
+<span class="sd">        - `self.__weights` shape is (nshells * nangpts,).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Generate radial and angular grids</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_generate_radial_grid</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_generate_angular_grid</span><span class="p">()</span>
         
+        
+        <span class="n">radcoord</span><span class="p">,</span> <span class="n">radial_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radcoords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radweights</span>
+        <span class="n">angcoords</span><span class="p">,</span> <span class="n">angular_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angcoords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angweights</span>
+        
+        <span class="c1"># Outer product to generate full grid: r_i * angular_points_j</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">radcoord</span><span class="p">,</span> <span class="n">angcoords</span><span class="p">)</span>
+        
+        <span class="c1"># Reshape to (nshells * nangpts, 3)</span>
+        <span class="n">nshells</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">radcoord</span><span class="p">)</span>
+        <span class="n">nang</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angcoords</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nshells</span> <span class="o">*</span> <span class="n">nang</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># Add atomic center position</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;coordinate&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">+</span> <span class="n">center</span>
+        
+        <span class="c1"># In spherical integration, dV = r^2 dr d\Omega.</span>
+        <span class="n">radial_weights</span> <span class="o">=</span> <span class="n">radial_weights</span> <span class="o">*</span> <span class="p">(</span><span class="n">radcoord</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Outer product of weights</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">radial_weights</span><span class="p">,</span> <span class="n">angular_weights</span><span class="p">)</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  <span class="c1"># Flatten to 1D array</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="o">=</span> <span class="n">weights</span></div>
+
+                
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_radial_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate radial grid using Gauss-Chebyshev quadrature</span>
@@ -120,7 +178,7 @@
         <span class="n">r_scale</span> <span class="o">=</span> <span class="n">r_BS_bohr</span> <span class="o">*</span> <span class="mf">0.5</span> 
         
         <span class="c1"># Generate radial points and weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__rr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chebychev</span><span class="o">.</span><span class="n">semi_infinite</span><span class="p">(</span><span class="n">r_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nshells</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__radcoords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radweights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chebychev</span><span class="o">.</span><span class="n">semi_infinite</span><span class="p">(</span><span class="n">r_scale</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nshells</span><span class="p">)</span>
         
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_angular_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -142,119 +200,88 @@
         <span class="n">degree</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         
         <span class="c1"># Get angular points (on unit sphere)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__angpts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__aw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
-        
-<div class="viewcode-block" id="AtomicGrid.get_radial_grid">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_radial_grid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_radial_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return radial grid points and weights</span>
-<span class="sd">        </span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        tuple</span>
-<span class="sd">            (radial_points, radial_weights)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rr</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_radial_grid</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rw</span></div>
-
-
-<div class="viewcode-block" id="AtomicGrid.get_angular_grid">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_angular_grid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_angular_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return angular grid points and weights</span>
-<span class="sd">        </span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        tuple</span>
-<span class="sd">            (angular_points, angular_weights)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angpts</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">__aw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_angular_grid</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angpts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__aw</span></div>
-
-           
-<div class="viewcode-block" id="AtomicGrid.get_full_grid">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_full_grid">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_full_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all the grid points as a list of positions (N x 3) matrix</span>
-<span class="sd">        </span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        ndarray</span>
-<span class="sd">            Full 3D grid points (nshells * nangpts, 3)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Ensure grids are generated</span>
-        <span class="n">rr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radial_grid</span><span class="p">()</span>
-        <span class="n">angpts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_angular_grid</span><span class="p">()</span>
-        
-        <span class="c1"># Outer product to generate full grid: r_i * angular_points_j</span>
-        <span class="n">full_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">angpts</span><span class="p">)</span>
-        
-        <span class="c1"># Reshape to (nshells * nangpts, 3)</span>
-        <span class="n">nshells</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
-        <span class="n">nang</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angpts</span><span class="p">)</span>
-        <span class="n">full_grid</span> <span class="o">=</span> <span class="n">full_grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nshells</span> <span class="o">*</span> <span class="n">nang</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        
-        <span class="c1"># Add atomic center position</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;coordinate&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
-        <span class="n">full_grid</span> <span class="o">=</span> <span class="n">full_grid</span> <span class="o">+</span> <span class="n">center</span>
-        
-        <span class="k">return</span> <span class="n">full_grid</span></div>
-
-    
-<div class="viewcode-block" id="AtomicGrid.get_full_weights">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_full_weights">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_full_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get weights for all grid points</span>
-<span class="sd">        </span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        ndarray</span>
-<span class="sd">            Weights for each grid point</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Ensure grids are generated</span>
-        <span class="n">rr</span><span class="p">,</span> <span class="n">rw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radial_grid</span><span class="p">()</span>
-        <span class="n">angpts</span><span class="p">,</span> <span class="n">aw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_angular_grid</span><span class="p">()</span>
-        
-        <span class="c1"># Weights are product of radial and angular weights</span>
-        <span class="n">nshells</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
-        <span class="n">nang</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angpts</span><span class="p">)</span>
-        
-        <span class="c1"># Outer product of weights</span>
-        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span> <span class="n">aw</span><span class="p">)</span>
-        
-        <span class="c1"># Reshape to 1D array</span>
-        <span class="k">return</span> <span class="n">weights</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nshells</span> <span class="o">*</span> <span class="n">nang</span><span class="p">)</span></div>
-
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">__angcoords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angweights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">coord</span><span class="o">=</span><span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
+                   
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Atomic center position&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;coordinate&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+ 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Full grid coordinates (nshells * nangpts, 3)&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">atomic_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Atomic number&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">)</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Full grid weights (nshells * nangpts,)&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__weights</span>
     
-<div class="viewcode-block" id="AtomicGrid.__len__">
-<a class="viewcode-back" href="../../api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.__len__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of grid points&quot;&quot;&quot;</span>
-        <span class="n">rr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_radial_grid</span><span class="p">()</span>
-        <span class="n">angpts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_angular_grid</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">angpts</span><span class="p">)</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">radial_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return radial grid coordinates</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray             </span>
+<span class="sd">            Radial coordinates (shape: (nshells, 3))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radcoords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_radial_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radcoords</span>        
 
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">radial_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return radial grid weights</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray</span>
+<span class="sd">            Radial weights (shape: (nshells,))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radweights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_radial_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__radweights</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angular_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return angular grid coordinates</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray            </span>
+<span class="sd">            Angular coordinates (shape: (nangpts, 3))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angcoords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_angular_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angcoords</span>
     
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AtomicGrid(atom=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;symbol&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Unknown&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;nshells=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nshells</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;nangpts=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nangpts</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angular_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return angular grid weights</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray</span>
+<span class="sd">            Angular weights (shape: (nangpts,))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angweights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generate_angular_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__angweights</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of atomic grid points.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__coords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__coords</span><span class="p">)</span></div>
 
 </pre></div>
 

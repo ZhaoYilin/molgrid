@@ -1,0 +1,311 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "ff3bc113",
+   "metadata": {},
+   "source": [
+    "# Quick Start\n",
+    "\n",
+    "This notebook provides a quick introduction to using MolGrid for molecular grid generation and integration. We'll walk through the basic workflow of creating molecules, generating grids, and calculating electron density with PySCF."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "molecule-intro",
+   "metadata": {},
+   "source": [
+    "## Creating a Molecule\n",
+    "\n",
+    "First, let's create a simple water molecule using the ``Molecule`` class. The water molecule has an oxygen atom at the origin and two hydrogen atoms at specific positions."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "bc74e274",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Created molecule: <molgrid.molecule.Molecule object at 0x11a84f390>\n",
+      "Number of atoms: 3\n",
+      "\n",
+      "Atom details:\n",
+      "  Atom 0: O at [0. 0. 0.]\n",
+      "  Atom 1: H at [ 0.    -0.757  0.587]\n",
+      "  Atom 2: H at [0.    0.757 0.587]\n"
+     ]
+    }
+   ],
+   "source": [
+    "from molgrid import Atom, Molecule\n",
+    "\n",
+    "# Create atoms with their coordinates (in angstroms)\n",
+    "oxygen = Atom('O', [0.0, 0.0, 0.0])\n",
+    "hydrogen1 = Atom('H', [0.0, -0.757, 0.587])\n",
+    "hydrogen2 = Atom('H', [0.0, 0.757, 0.587])\n",
+    "\n",
+    "# Create molecule from the atoms\n",
+    "water = Molecule([oxygen, hydrogen1, hydrogen2])\n",
+    "print(f\"Created molecule: {water}\")\n",
+    "print(f\"Number of atoms: {len(water)}\")\n",
+    "\n",
+    "# Let's also print the atom information\n",
+    "print(\"\\nAtom details:\")\n",
+    "for i, atom in enumerate(water):\n",
+    "    print(f\"  Atom {i}: {atom.symbol} at {atom.coordinate}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "atomicgrid-intro",
+   "metadata": {},
+   "source": [
+    "## Creating an Atomic Grid\n",
+    "\n",
+    "Now let's create an atomic grid for the oxygen atom. Atomic grids are constructed using radial shells and angular points. The radial shells determine how many concentric spheres we have, and the angular points determine how many points on each sphere."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "6095d1c5",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Oxygen atomic grid:\n",
+      "  Number of points: 22650\n",
+      "  Coordinates shape: (22650, 3)\n",
+      "  Weights shape: (22650,)\n",
+      "  Total weight: 59199645676.309372\n",
+      "\n",
+      "First 5 grid points and weights:\n",
+      "  Point 0: [1326.73399783    0.            0.        ], weight: 50173399.244666\n",
+      "  Point 1: [-1326.73399783     0.             0.        ], weight: 50173399.244666\n",
+      "  Point 2: [   0.         1326.73399783    0.        ], weight: 50173399.244666\n",
+      "  Point 3: [    0.         -1326.73399783     0.        ], weight: 50173399.244666\n",
+      "  Point 4: [   0.            0.         1326.73399783], weight: 50173399.244666\n"
+     ]
+    }
+   ],
+   "source": [
+    "from molgrid import AtomicGrid\n",
+    "\n",
+    "# Create atomic grid for oxygen\n",
+    "# nshells=10: 10 radial shells\n",
+    "# nangpts=110: 110 angular points per shell (using Lebedev quadrature)\n",
+    "oxygen_grid = AtomicGrid(oxygen, nshells=75, nangpts=302)\n",
+    "\n",
+    "print(f\"Oxygen atomic grid:\")\n",
+    "print(f\"  Number of points: {len(oxygen_grid)}\")\n",
+    "print(f\"  Coordinates shape: {oxygen_grid.coords.shape}\")\n",
+    "print(f\"  Weights shape: {oxygen_grid.weights.shape}\")\n",
+    "print(f\"  Total weight: {oxygen_grid.weights.sum():.6f}\")\n",
+    "\n",
+    "# Let's look at the first few points\n",
+    "print(\"\\nFirst 5 grid points and weights:\")\n",
+    "for i in range(5):\n",
+    "    print(f\"  Point {i}: {oxygen_grid.coords[i]}, weight: {oxygen_grid.weights[i]:.6f}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "moleculargrid-intro",
+   "metadata": {},
+   "source": [
+    "## Creating a Molecular Grid\n",
+    "\n",
+    "A molecular grid combines atomic grids from all atoms in the molecule. We use Becke partitioning to assign weights to each grid point based on its proximity to different atoms. This prevents double-counting of electron density."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "d52b0ac8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Molecular grid:\n",
+      "  Number of points: 67950\n",
+      "  Coordinates shape: (67950, 3)\n",
+      "  Weights shape: (67950,)\n",
+      "  Total weight: 28788884690.918945\n",
+      "\n",
+      "Without partitioning: 67950 points\n",
+      "  Total weight: 82701356864.936829\n",
+      "  Total weight: 82701356864.936829\n"
+     ]
+    }
+   ],
+   "source": [
+    "from molgrid import MolecularGrid\n",
+    "\n",
+    "# Create molecular grid with Becke partition\n",
+    "# partition_method='becke': Use Becke partitioning for grid partition\n",
+    "mol_grid = MolecularGrid(water, nshells=75, nangpts=302, partition_method='becke')\n",
+    "\n",
+    "print(f\"Molecular grid:\")\n",
+    "print(f\"  Number of points: {len(mol_grid)}\")\n",
+    "print(f\"  Coordinates shape: {mol_grid.coords.shape}\")\n",
+    "print(f\"  Weights shape: {mol_grid.weights.shape}\")\n",
+    "print(f\"  Total weight: {mol_grid.weights.sum():.6f}\")\n",
+    "\n",
+    "# Compare with unpartitioned grid\n",
+    "mol_grid_no_prune = MolecularGrid(water, nshells=75, nangpts=302, partition_method=None)\n",
+    "print(f\"\\nWithout partitioning: {len(mol_grid_no_prune)} points\")\n",
+    "print(f\"  Total weight: {mol_grid_no_prune.weights.sum():.6f}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "iteration-intro",
+   "metadata": {},
+   "source": [
+    "## Iterating Through Atomic Grids\n",
+    "\n",
+    "You can iterate through the atomic grids that make up the molecular grid. This is useful for analyzing contributions from individual atoms."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "68026f90",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Atomic grids in pruned molecular grid:\n",
+      "  Atom 0 (O): 22650 points, weight sum: 21244363291.203724\n",
+      "  Atom 1 (H): 22650 points, weight sum: 3772260699.857614\n",
+      "  Atom 2 (H): 22650 points, weight sum: 3772260699.857613\n",
+      "\n",
+      "Total points from atomic grids: 67950\n",
+      "Matches molecular grid total: True\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Atomic grids in pruned molecular grid:\")\n",
+    "total_points = 0\n",
+    "for i, atomic_grid in enumerate(mol_grid):\n",
+    "    points = len(atomic_grid)\n",
+    "    total_points += points\n",
+    "    print(f\"  Atom {i} ({atomic_grid.atom.symbol}): {points} points, weight sum: {atomic_grid.weights.sum():.6f}\")\n",
+    "\n",
+    "print(f\"\\nTotal points from atomic grids: {total_points}\")\n",
+    "print(f\"Matches molecular grid total: {total_points == len(mol_grid)}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "electron-density-intro",
+   "metadata": {},
+   "source": [
+    "## Calculating Electron Density\n",
+    "\n",
+    "Now let's calculate the electron density using PySCF. We'll use the molecular grid we created to integrate the electron density and get the total number of electrons in the molecule."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "fca97722",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Electron density calculation results:\n",
+      "  Calculated number of electrons: 10.000001\n",
+      "  Expected number of electrons: 10.000000\n",
+      "  Error: 0.000001\n",
+      "\n",
+      "Electron distribution by atom:\n",
+      "  Atom 0 (O): 6.820235 electrons\n",
+      "  Atom 1 (H): 1.589883 electrons\n",
+      "  Atom 2 (H): 1.589883 electrons\n",
+      "\n",
+      "Total electrons from atomic grids: 10.000001\n",
+      "Matches molecular total: True\n"
+     ]
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "from pyscf import gto, dft\n",
+    "from pyscf.dft import numint\n",
+    "\n",
+    "# Create PySCF molecule (same geometry as our MolGrid molecule)\n",
+    "mol = gto.M(atom='O 0 0 0; H 0 -0.757 0.587; H 0 0.757 0.587', basis='6-31g', verbose=0)\n",
+    "\n",
+    "# Run DFT calculation to get the electron density\n",
+    "mf = dft.RKS(mol)\n",
+    "mf.kernel()\n",
+    "rdm1 = mf.make_rdm1()  # Get the 1-electron reduced density matrix\n",
+    "\n",
+    "# Evaluate atomic orbitals on our grid\n",
+    "ao = numint.eval_ao(mol, mol_grid.coords, deriv=0)\n",
+    "\n",
+    "# Calculate electron density at each grid point\n",
+    "rho = numint.eval_rho(mol, ao, rdm1, xctype='LDA')\n",
+    "\n",
+    "# Integrate electron density over the entire grid\n",
+    "number_of_electrons = np.sum(rho * mol_grid.weights)\n",
+    "\n",
+    "print(f\"Electron density calculation results:\")\n",
+    "print(f\"  Calculated number of electrons: {number_of_electrons:.6f}\")\n",
+    "print(f\"  Expected number of electrons: 10.000000\")\n",
+    "print(f\"  Error: {abs(number_of_electrons - 10.0):.6f}\")\n",
+    "\n",
+    "# Let's also calculate electron density for each atomic grid\n",
+    "print(\"\\nElectron distribution by atom:\")\n",
+    "total_electrons = 0\n",
+    "for i, atomic_grid in enumerate(mol_grid):\n",
+    "    # Evaluate AO on atomic grid\n",
+    "    ao_atom = numint.eval_ao(mol, atomic_grid.coords, deriv=0)\n",
+    "    # Calculate density on atomic grid\n",
+    "    rho_atom = numint.eval_rho(mol, ao_atom, rdm1, xctype='LDA')\n",
+    "    # Integrate electron density on atomic grid\n",
+    "    atom_electrons = np.sum(rho_atom * atomic_grid.weights)\n",
+    "    total_electrons += atom_electrons\n",
+    "    print(f\"  Atom {i} ({atomic_grid.atom.symbol}): {atom_electrons:.6f} electrons\")\n",
+    "\n",
+    "print(f\"\\nTotal electrons from atomic grids: {total_electrons:.6f}\")\n",
+    "print(f\"Matches molecular total: {abs(total_electrons - number_of_electrons) < 1e-10}\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "base",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

@@ -1,0 +1,15 @@
+# docs/source/api.rst
+API
+===
+
+.. autosummary::
+   :toctree: .
+   :recursive:
+
+   molgrid
+   molgrid.atomicgrid
+   molgrid.moleculargrid
+   molgrid.molecule
+   molgrid.prune
+   molgrid.quadrature
+

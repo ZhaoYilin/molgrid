@@ -9,8 +9,10 @@
   <title>Installation &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
+    <link rel="shortcut icon" href="_static/logo.ico"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=01f34227"></script>
@@ -43,29 +45,20 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-molgrid">Installing MolGrid</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#from-source">From Source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#with-dependencies">With Dependencies</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#verifying-installation">Verifying Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#importerror-no-module-named-numpy">ImportError: No module named ‘numpy’</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#could-not-find-version-of-package-molgrid">Could not find version of package molgrid</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-from-source-code">Compiling from source code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verifying-the-installation">Verifying the Installation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">molgrid</a></li>
 </ul>
 
         </div>
@@ -84,7 +77,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Installation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/installation.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -92,101 +85,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="installation">
+  <section class="tex2jax_ignore mathjax_ignore" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>This page provides instructions for installing MolGrid and its dependencies.</p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before installing MolGrid, you should have the following software installed:</p>
 <ul class="simple">
-<li><p>Python 3.8 or higher</p></li>
-<li><p>NumPy 1.16.0 or higher</p></li>
+<li><p>Python 3.7 or later</p></li>
+<li><p>NumPy</p></li>
+<li><p>PySCF (optional, for electron density calculations)</p></li>
 </ul>
 </section>
-<section id="installing-molgrid">
-<h2>Installing MolGrid<a class="headerlink" href="#installing-molgrid" title="Link to this heading"></a></h2>
-<section id="from-source">
-<h3>From Source<a class="headerlink" href="#from-source" title="Link to this heading"></a></h3>
-<p>Clone the repository and install in development mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yourusername/molgrid.git
+<section id="compiling-from-source-code">
+<h2>Compiling from source code<a class="headerlink" href="#compiling-from-source-code" title="Link to this heading"></a></h2>
+<p>The recommended way to install MolGrid is from source:</p>
+<ul class="simple">
+<li><p>Clone the repository:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ZhaoYilin/molgrid.git
 <span class="nb">cd</span><span class="w"> </span>molgrid
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-</section>
-<section id="with-dependencies">
-<h3>With Dependencies<a class="headerlink" href="#with-dependencies" title="Link to this heading"></a></h3>
-<p>To install MolGrid with all optional dependencies for development and testing:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Installation with test framework</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span>
-
-<span class="c1"># Installation with Sphinx documentation tools</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[docs]&quot;</span>
-
-<span class="c1"># Installation with all extras</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="verifying-installation">
-<h2>Verifying Installation<a class="headerlink" href="#verifying-installation" title="Link to this heading"></a></h2>
-<p>To verify the installation, you can run:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">molgrid</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">molgrid</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Or run the test suite:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>test/
-</pre></div>
-</div>
-</section>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
-<p>Core Dependencies:</p>
 <ul class="simple">
-<li><p><strong>NumPy</strong> (&gt;=1.16.0): Numerical computing library for array operations and linear algebra</p></li>
+<li><p>Install MolGrid:</p></li>
 </ul>
-<p>Optional Dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p>This will install MolGrid in development mode, which means changes to the source code will be immediately available without needing to reinstall.</p>
 <ul class="simple">
-<li><p><strong>pytest</strong> (&gt;=7.0): Testing framework for running the test suite</p></li>
-<li><p><strong>Sphinx</strong> (&gt;=4.0): Documentation generation (for building these docs)</p></li>
-<li><p><strong>sphinx-rtd-theme</strong>: ReadTheDocs theme for Sphinx documentation</p></li>
+<li><p>Using pip to install python package on GitHub</p></li>
 </ul>
-</section>
-<section id="system-requirements">
-<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>Disk Space</strong>: ~50 MB for source code and dependencies</p></li>
-<li><p><strong>RAM</strong>: 512 MB minimum for typical grid generation tasks</p></li>
-<li><p><strong>CPU</strong>: Any modern processor (grids are typically computed in seconds)</p></li>
-</ul>
-</section>
-<section id="troubleshooting">
-<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
-<section id="importerror-no-module-named-numpy">
-<h3>ImportError: No module named ‘numpy’<a class="headerlink" href="#importerror-no-module-named-numpy" title="Link to this heading"></a></h3>
-<p>If you get an error about missing NumPy, install it first:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>numpy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/ZhaoYilin/molgrid
 </pre></div>
 </div>
 </section>
-<section id="could-not-find-version-of-package-molgrid">
-<h3>Could not find version of package molgrid<a class="headerlink" href="#could-not-find-version-of-package-molgrid" title="Link to this heading"></a></h3>
-<p>Make sure you’re installing from a directory with a valid setup.py file:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/molgrid
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<section id="verifying-the-installation">
+<h2>Verifying the Installation<a class="headerlink" href="#verifying-the-installation" title="Link to this heading"></a></h2>
+<p>To verify that MolGrid is installed correctly, run the test suite:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>test/<span class="w"> </span>-v
 </pre></div>
 </div>
-</section>
-</section>
-<section id="development-installation">
-<h2>Development Installation<a class="headerlink" href="#development-installation" title="Link to this heading"></a></h2>
-<p>For development, create a virtual environment and install in editable mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[test]&quot;</span>
-</pre></div>
-</div>
-<p>This allows you to modify the source code and immediately see changes without reinstalling.</p>
+<p>All tests should pass if the installation was successful.</p>
 </section>
 </section>
 

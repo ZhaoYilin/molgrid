@@ -8,6 +8,7 @@
   <title>molgrid.prune &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -28,8 +29,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            MolGrid
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,12 +41,20 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebook.html">NoteBook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.html">molgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.atomicgrid.html">molgrid.atomicgrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.moleculargrid.html">molgrid.moleculargrid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.molecule.html">molgrid.molecule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.prune.html">molgrid.prune</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molgrid.quadrature.html">molgrid.quadrature</a></li>
 </ul>
 
         </div>
@@ -75,22 +85,19 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <div class="viewcode-block" id="Becke">
-<a class="viewcode-back" href="../../api/prune.html#molgrid.prune.Becke">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.html#molgrid.prune.Becke">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Becke</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct Becke grid for a molecule&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct Becke grid for a molecule.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span> <span class="o">=</span> <span class="n">molecule</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">molecule</span><span class="o">.</span><span class="n">atoms</span>  <span class="c1"># Added to store atoms from molecule</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_weight_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xyzp</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_weight_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_r</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the Becke weight function for a point in space.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        xyzp : ndarray</span>
+<span class="sd">        coord_r : ndarray</span>
 <span class="sd">            Point coordinates [x, y, z]</span>
-<span class="sd">        do_becke_hetero : bool, optional</span>
-<span class="sd">            Whether to apply heteroatomic corrections (default: True)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -98,8 +105,8 @@
 <span class="sd">            List of weights for each atom</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">ati</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
-            <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voronoi_polyhedron</span><span class="p">(</span><span class="n">ati</span><span class="p">,</span> <span class="n">xyzp</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="n">do_becke_hetero</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">atomA</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voronoi_polyhedron</span><span class="p">(</span><span class="n">atomA</span><span class="p">,</span> <span class="n">coord_r</span><span class="p">)</span>
             <span class="n">weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
 
         <span class="c1"># Normalize weights so they sum to 1</span>
@@ -109,38 +116,36 @@
 
         <span class="k">return</span> <span class="n">weights</span>
     
-    <span class="k">def</span><span class="w"> </span><span class="nf">_voronoi_polyhedron</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ati</span><span class="p">,</span> <span class="n">xyzp</span><span class="p">,</span> <span class="n">do_becke_hetero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_voronoi_polyhedron</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomA</span><span class="p">,</span> <span class="n">coord_r</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Voronoi polyhedron function constructed from the smoothing function.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ati : Atom</span>
+<span class="sd">        atomA : Atom</span>
 <span class="sd">            Reference atom</span>
-<span class="sd">        xyzp : ndarray</span>
+<span class="sd">        coord_r : ndarray</span>
 <span class="sd">            Point coordinates [x, y, z]</span>
-<span class="sd">        do_becke_hetero : bool, optional</span>
-<span class="sd">            Whether to apply heteroatomic corrections (default: True)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Becke weight</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ati</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">xyzp</span><span class="p">)</span>
+        <span class="n">rip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">atomA</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">coord_r</span><span class="p">)</span>
         <span class="n">sprod</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-        <span class="k">for</span> <span class="n">atj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">ati</span> <span class="o">==</span> <span class="n">atj</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">atomB</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecule</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">atomA</span> <span class="o">==</span> <span class="n">atomB</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="n">rij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ati</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">atj</span><span class="o">.</span><span class="n">coordinate</span><span class="p">)</span>
-            <span class="n">rjp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">atj</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">xyzp</span><span class="p">)</span>
+            <span class="n">rij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">atomA</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">atomB</span><span class="o">.</span><span class="n">coordinate</span><span class="p">)</span>
+            <span class="n">rjp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">atomB</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">coord_r</span><span class="p">)</span>
             <span class="n">mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">rip</span> <span class="o">-</span> <span class="n">rjp</span><span class="p">)</span> <span class="o">/</span> <span class="n">rij</span>
 
             <span class="c1"># Modify mu based on Becke hetero formulas</span>
-            <span class="k">if</span> <span class="n">do_becke_hetero</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ati</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atj</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">ati</span><span class="o">.</span><span class="n">number</span> <span class="o">!=</span> <span class="n">atj</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
-                    <span class="n">chi</span> <span class="o">=</span> <span class="n">ati</span><span class="o">.</span><span class="n">cov_radius_slater</span> <span class="o">/</span> <span class="n">atj</span><span class="o">.</span><span class="n">cov_radius_slater</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atomA</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">atomB</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">atomA</span><span class="o">.</span><span class="n">number</span> <span class="o">!=</span> <span class="n">atomB</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
+                    <span class="n">chi</span> <span class="o">=</span> <span class="n">atomA</span><span class="o">.</span><span class="n">cov_radius_slater</span> <span class="o">/</span> <span class="n">atomB</span><span class="o">.</span><span class="n">cov_radius_slater</span>
                     <span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">chi</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">chi</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
                     <span class="n">a</span> <span class="o">=</span> <span class="n">u</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
                     <span class="n">a</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>

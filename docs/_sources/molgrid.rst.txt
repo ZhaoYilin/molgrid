@@ -1,0 +1,17 @@
+﻿molgrid
+=======
+
+.. automodule:: molgrid
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   atomicgrid
+   moleculargrid
+   molecule
+   prune
+   quadrature

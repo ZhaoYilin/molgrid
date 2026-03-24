@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>molgrid.moleculargrid module &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="molgrid.molecule module" href="molgrid.molecule.html" />
+    <link rel="prev" title="molgrid.atomicgrid module" href="molgrid.atomicgrid.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">molgrid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="molgrid.html">molgrid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="molgrid.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="molgrid.atomicgrid.html">molgrid.atomicgrid module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">molgrid.moleculargrid module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="molgrid.molecule.html">molgrid.molecule module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="molgrid.partition.html">molgrid.partition module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="molgrid.quadrature.html">molgrid.quadrature module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="molgrid.html#module-molgrid">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">molgrid</a></li>
+          <li class="breadcrumb-item"><a href="molgrid.html">molgrid package</a></li>
+      <li class="breadcrumb-item active">molgrid.moleculargrid module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/molgrid.moleculargrid.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-molgrid.moleculargrid">
+<span id="molgrid-moleculargrid-module"></span><h1>molgrid.moleculargrid module<a class="headerlink" href="#module-molgrid.moleculargrid" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="molgrid.moleculargrid.MolecularGrid">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">molgrid.moleculargrid.</span></span><span class="sig-name descname"><span class="pre">MolecularGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nshells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nangpts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">110</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'becke'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/moleculargrid.html#MolecularGrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.moleculargrid.MolecularGrid" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Build a molecular integration grid by combining atomic grids.</p>
+<p>Each atom produces a radial/angular grid via <a class="reference internal" href="molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid" title="molgrid.atomicgrid.AtomicGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomicGrid</span></code></a>.
+Becke partition weights can be applied to distribute grid contributions across atoms.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="molgrid.moleculargrid.MolecularGrid.coords">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">coords</span></span><a class="headerlink" href="#molgrid.moleculargrid.MolecularGrid.coords" title="Link to this definition"></a></dt>
+<dd><p>Cached full grid coordinates.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="molgrid.moleculargrid.MolecularGrid.weights">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#molgrid.moleculargrid.MolecularGrid.weights" title="Link to this definition"></a></dt>
+<dd><p>Cached full grid weights.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.moleculargrid.MolecularGrid.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/moleculargrid.html#MolecularGrid.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.moleculargrid.MolecularGrid.build" title="Link to this definition"></a></dt>
+<dd><p>Build each atomic grid and refresh cached molecular grid.</p>
+<p>This method constructs atomic grids for each atom in the molecule and
+optionally prunes the grid points based on the specified pruning method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Modifies the grid in place by building and optionally pruning the grid.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If an invalid prune method is specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="molgrid.moleculargrid.MolecularGrid.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_grids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'becke'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/molgrid/moleculargrid.html#MolecularGrid.partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#molgrid.moleculargrid.MolecularGrid.partition" title="Link to this definition"></a></dt>
+<dd><p>Partition the grid weights based on the specified method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atomic_grids</strong> (<em>[</em><a class="reference internal" href="molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid" title="molgrid.atomicgrid.AtomicGrid"><em>AtomicGrid</em></a><em>]</em>) – List of atomic grids to partition.</p></li>
+<li><p><strong>partition_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Partition method to use. Default is ‘becke’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If an invalid partition method is specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="molgrid.atomicgrid.html" class="btn btn-neutral float-left" title="molgrid.atomicgrid module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="molgrid.molecule.html" class="btn btn-neutral float-right" title="molgrid.molecule module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

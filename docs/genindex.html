@@ -8,8 +8,10 @@
   <title>Index &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
+    <link rel="shortcut icon" href="_static/logo.ico"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=01f34227"></script>
@@ -40,12 +42,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">molgrid</a></li>
 </ul>
 
         </div>
@@ -75,11 +80,9 @@
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
- <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
+ <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
- | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
@@ -88,40 +91,25 @@
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
-<h2 id="_">_</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Atom.__eq__">__eq__() (molgrid.molecule.Atom method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.__len__">__len__() (molgrid.atomicgrid.AtomicGrid method)</a>
-
-      <ul>
-        <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.__len__">(molgrid.moleculargrid.MolecularGrid method)</a>
-</li>
-      </ul></li>
-  </ul></td>
-</tr></table>
-
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.add_atom">add_atom() (molgrid.molecule.Molecule method)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule.add_atom">add_atom() (molgrid.molecule.Molecule method)</a>
 </li>
-      <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.apply_becke_weights">apply_becke_weights() (molgrid.moleculargrid.MolecularGrid method)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.angular_coords">angular_coords (molgrid.atomicgrid.AtomicGrid property)</a>
 </li>
-      <li><a href="api/molecule.html#molgrid.molecule.Atom.assign_coordinate">assign_coordinate() (molgrid.molecule.Atom method)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.angular_weights">angular_weights (molgrid.atomicgrid.AtomicGrid property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Atom">Atom (class in molgrid.molecule)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Atom.assign_coordinate">assign_coordinate() (molgrid.molecule.Atom method)</a>
 </li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.atomic_number">atomic_number (molgrid.atomicgrid.AtomicGrid property)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Atom">Atom (class in molgrid.molecule)</a>
 </li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid">AtomicGrid (class in molgrid.atomicgrid)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid">AtomicGrid (class in molgrid.atomicgrid)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -129,31 +117,41 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/prune.html#molgrid.prune.Becke">Becke (class in molgrid.prune)</a>
+      <li><a href="api/molgrid.partition.html#molgrid.partition.Becke">Becke (class in molgrid.partition)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.build">build() (molgrid.atomicgrid.AtomicGrid method)</a>
+
+      <ul>
+        <li><a href="api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.build">(molgrid.moleculargrid.MolecularGrid method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.center">center (molgrid.atomicgrid.AtomicGrid property)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.center">center (molgrid.atomicgrid.AtomicGrid property)</a>
+</li>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule.coordinate">coordinate (molgrid.molecule.Molecule property)</a>
 </li>
   </ul></td>
-</tr></table>
-
-<h2 id="D">D</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Atom.distance_to">distance_to() (molgrid.molecule.Atom method)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.coords">coords (molgrid.atomicgrid.AtomicGrid property)</a>
+
+      <ul>
+        <li><a href="api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.coords">(molgrid.moleculargrid.MolecularGrid property)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Element">Element (class in molgrid.molecule)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Element">Element (class in molgrid.molecule)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -161,7 +159,7 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/quadrature.html#id5">finite() (molgrid.quadrature.GaussChebychev method)</a>, <a href="api/quadrature.html#molgrid.quadrature.GaussChebychev.finite">[1]</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.GaussChebychev.finite">finite() (molgrid.quadrature.GaussChebychev method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -169,45 +167,17 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/quadrature.html#id4">GaussChebychev (class in molgrid.quadrature)</a>, <a href="api/quadrature.html#molgrid.quadrature.GaussChebychev">[1]</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.GaussChebychev">GaussChebychev (class in molgrid.quadrature)</a>
 </li>
-      <li><a href="api/quadrature.html#id1">get() (molgrid.quadrature.Lebedev method)</a>, <a href="api/quadrature.html#molgrid.quadrature.Lebedev.get">[1]</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.Lebedev.get">get() (molgrid.quadrature.Lebedev method)</a>
 </li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_angular_grid">get_angular_grid() (molgrid.atomicgrid.AtomicGrid method)</a>
-</li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.get_atom">get_atom() (molgrid.molecule.Molecule method)</a>
-</li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.get_atomic_numbers">get_atomic_numbers() (molgrid.molecule.Molecule method)</a>
-</li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.get_coordinates">get_coordinates() (molgrid.molecule.Molecule method)</a>
-</li>
-      <li><a href="api/quadrature.html#id2">get_degrees_list() (molgrid.quadrature.Lebedev method)</a>, <a href="api/quadrature.html#molgrid.quadrature.Lebedev.get_degrees_list">[1]</a>
-</li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_full_grid">get_full_grid() (molgrid.atomicgrid.AtomicGrid method)</a>
-
-      <ul>
-        <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_grid">(molgrid.moleculargrid.MolecularGrid method)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_grid_with_weights">get_full_grid_with_weights() (molgrid.moleculargrid.MolecularGrid method)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule.get_atom">get_atom() (molgrid.molecule.Molecule method)</a>
 </li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_full_weights">get_full_weights() (molgrid.atomicgrid.AtomicGrid method)</a>
-
-      <ul>
-        <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_full_weights">(molgrid.moleculargrid.MolecularGrid method)</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.Lebedev.get_degrees_list">get_degrees_list() (molgrid.quadrature.Lebedev method)</a>
 </li>
-      </ul></li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.get_masses">get_masses() (molgrid.molecule.Molecule method)</a>
-</li>
-      <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.get_molecular_grid_with_becke">get_molecular_grid_with_becke() (molgrid.moleculargrid.MolecularGrid method)</a>
-</li>
-      <li><a href="api/quadrature.html#id3">get_npoints_list() (molgrid.quadrature.Lebedev method)</a>, <a href="api/quadrature.html#molgrid.quadrature.Lebedev.get_npoints_list">[1]</a>
-</li>
-      <li><a href="api/atomicgrid.html#molgrid.atomicgrid.AtomicGrid.get_radial_grid">get_radial_grid() (molgrid.atomicgrid.AtomicGrid method)</a>
-</li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.get_symbols">get_symbols() (molgrid.molecule.Molecule method)</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.Lebedev.get_npoints_list">get_npoints_list() (molgrid.quadrature.Lebedev method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -215,7 +185,7 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/quadrature.html#id0">Lebedev (class in molgrid.quadrature)</a>, <a href="api/quadrature.html#molgrid.quadrature.Lebedev">[1]</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.Lebedev">Lebedev (class in molgrid.quadrature)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -223,60 +193,71 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule.mass">mass (molgrid.molecule.Molecule property)</a>
+</li>
       <li>
     module
 
       <ul>
-        <li><a href="api/atomicgrid.html#module-molgrid.atomicgrid">molgrid.atomicgrid</a>
+        <li><a href="api/molgrid.html#module-molgrid">molgrid</a>
 </li>
-        <li><a href="api/moleculargrid.html#module-molgrid.moleculargrid">molgrid.moleculargrid</a>
+        <li><a href="api/molgrid.atomicgrid.html#module-molgrid.atomicgrid">molgrid.atomicgrid</a>
 </li>
-        <li><a href="api/molecule.html#module-molgrid.molecule">molgrid.molecule</a>
+        <li><a href="api/molgrid.moleculargrid.html#module-molgrid.moleculargrid">molgrid.moleculargrid</a>
 </li>
-        <li><a href="api/prune.html#module-molgrid.prune">molgrid.prune</a>
+        <li><a href="api/molgrid.molecule.html#module-molgrid.molecule">molgrid.molecule</a>
 </li>
-        <li><a href="api/quadrature.html#module-molgrid.quadrature">molgrid.quadrature</a>
+        <li><a href="api/molgrid.partition.html#module-molgrid.partition">molgrid.partition</a>
+</li>
+        <li><a href="api/molgrid.quadrature.html#module-molgrid.quadrature">molgrid.quadrature</a>
 </li>
       </ul></li>
-      <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid">MolecularGrid (class in molgrid.moleculargrid)</a>
+      <li><a href="api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid">MolecularGrid (class in molgrid.moleculargrid)</a>
 </li>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule">Molecule (class in molgrid.molecule)</a>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule">Molecule (class in molgrid.molecule)</a>
 </li>
       <li>
-    molgrid.atomicgrid
+    molgrid
 
       <ul>
-        <li><a href="api/atomicgrid.html#module-molgrid.atomicgrid">module</a>
+        <li><a href="api/molgrid.html#module-molgrid">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
+    molgrid.atomicgrid
+
+      <ul>
+        <li><a href="api/molgrid.atomicgrid.html#module-molgrid.atomicgrid">module</a>
+</li>
+      </ul></li>
+      <li>
     molgrid.moleculargrid
 
       <ul>
-        <li><a href="api/moleculargrid.html#module-molgrid.moleculargrid">module</a>
+        <li><a href="api/molgrid.moleculargrid.html#module-molgrid.moleculargrid">module</a>
 </li>
       </ul></li>
       <li>
     molgrid.molecule
 
       <ul>
-        <li><a href="api/molecule.html#module-molgrid.molecule">module</a>
+        <li><a href="api/molgrid.molecule.html#module-molgrid.molecule">module</a>
 </li>
       </ul></li>
       <li>
-    molgrid.prune
+    molgrid.partition
 
       <ul>
-        <li><a href="api/prune.html#module-molgrid.prune">module</a>
+        <li><a href="api/molgrid.partition.html#module-molgrid.partition">module</a>
 </li>
       </ul></li>
       <li>
     molgrid.quadrature
 
       <ul>
-        <li><a href="api/quadrature.html#module-molgrid.quadrature">module</a>
+        <li><a href="api/molgrid.quadrature.html#module-molgrid.quadrature">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -285,7 +266,7 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/moleculargrid.html#molgrid.moleculargrid.MolecularGrid.prune_grid">prune_grid() (molgrid.moleculargrid.MolecularGrid method)</a>
+      <li><a href="api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.partition">partition() (molgrid.moleculargrid.MolecularGrid method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -293,7 +274,13 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/molecule.html#molgrid.molecule.Molecule.remove_atom">remove_atom() (molgrid.molecule.Molecule method)</a>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.radial_coords">radial_coords (molgrid.atomicgrid.AtomicGrid property)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.radial_weights">radial_weights (molgrid.atomicgrid.AtomicGrid property)</a>
+</li>
+      <li><a href="api/molgrid.molecule.html#molgrid.molecule.Molecule.remove_atom">remove_atom() (molgrid.molecule.Molecule method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -301,8 +288,24 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/quadrature.html#id6">semi_infinite() (molgrid.quadrature.GaussChebychev method)</a>, <a href="api/quadrature.html#molgrid.quadrature.GaussChebychev.semi_infinite">[1]</a>
+      <li><a href="api/molgrid.quadrature.html#molgrid.quadrature.GaussChebychev.semi_infinite">semi_infinite() (molgrid.quadrature.GaussChebychev method)</a>
 </li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/molgrid.partition.html#molgrid.partition.Becke.weight_function">weight_function() (molgrid.partition.Becke method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/molgrid.atomicgrid.html#molgrid.atomicgrid.AtomicGrid.weights">weights (molgrid.atomicgrid.AtomicGrid property)</a>
+
+      <ul>
+        <li><a href="api/molgrid.moleculargrid.html#molgrid.moleculargrid.MolecularGrid.weights">(molgrid.moleculargrid.MolecularGrid property)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 

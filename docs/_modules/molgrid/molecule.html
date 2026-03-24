@@ -8,8 +8,10 @@
   <title>molgrid.molecule &mdash; MolGrid 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
 
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../_static/documentation_options.js?v=01f34227"></script>
@@ -28,8 +30,9 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
-            MolGrid
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -39,12 +42,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebook.html">Notebook</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">molgrid</a></li>
 </ul>
 
         </div>
@@ -76,7 +82,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <div class="viewcode-block" id="Element">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Element">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Element">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Element</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Element class containing atomic properties&quot;&quot;&quot;</span>
     
@@ -163,18 +169,14 @@
         
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_periodic_table</span><span class="p">[</span><span class="n">number</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
     
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Element(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">symbol</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
-
-
 <div class="viewcode-block" id="Atom">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Atom">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Atom">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Atom</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize an atom</span>
 <span class="sd">        </span>
@@ -205,22 +207,9 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">assign_coordinate</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Atom.__eq__">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Atom.__eq__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if two atoms are equal&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Atom</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
 <div class="viewcode-block" id="Atom.assign_coordinate">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Atom.assign_coordinate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">assign_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Atom.assign_coordinate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assign_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assign coordinates to the atom</span>
 <span class="sd">        </span>
@@ -242,27 +231,25 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;length of the coordinate must be 3&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
 
-    
-<div class="viewcode-block" id="Atom.distance_to">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Atom.distance_to">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">distance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate distance to another atom&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">coordinate</span><span class="p">)</span></div>
 
-    
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Atom(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">symbol</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if two atoms are equal&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Atom</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
-
-
+        
 <div class="viewcode-block" id="Molecule">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Molecule">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Molecule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Molecule class representing a collection of atoms</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="sd">    &quot;&quot;&quot;</span>   
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize a molecule</span>
 <span class="sd">        </span>
@@ -270,24 +257,21 @@
 <span class="sd">        ----------</span>
 <span class="sd">        atoms : list, optional</span>
 <span class="sd">            List of Atom objects</span>
-<span class="sd">        name : str, optional</span>
-<span class="sd">            Molecule name</span>
 <span class="sd">        charge : int, optional</span>
 <span class="sd">            Total molecular charge (default: 0)</span>
 <span class="sd">        multiplicity : int, optional</span>
 <span class="sd">            Spin multiplicity (default: 1 for singlet)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="s2">&quot;Unnamed&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">charge</span> <span class="o">=</span> <span class="n">charge</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multiplicity</span> <span class="o">=</span> <span class="n">multiplicity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="k">if</span> <span class="n">atoms</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_atom</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
     
 <div class="viewcode-block" id="Molecule.add_atom">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.add_atom">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Molecule.add_atom">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_atom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an atom to the molecule&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">Atom</span><span class="p">):</span>
@@ -296,7 +280,7 @@
 
     
 <div class="viewcode-block" id="Molecule.remove_atom">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.remove_atom">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Molecule.remove_atom">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_atom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove atom at given index&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">):</span>
@@ -305,7 +289,7 @@
 
     
 <div class="viewcode-block" id="Molecule.get_atom">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.get_atom">[docs]</a>
+<a class="viewcode-back" href="../../api/molgrid.molecule.html#molgrid.molecule.Molecule.get_atom">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_atom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get atom at given index&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">):</span>
@@ -313,33 +297,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
 
     
-<div class="viewcode-block" id="Molecule.get_coordinates">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.get_coordinates">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all atomic coordinates as Nx3 array&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">coordinate</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span></div>
-
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">atom</span><span class="o">.</span><span class="n">coordinate</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">])</span>
     
-<div class="viewcode-block" id="Molecule.get_symbols">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.get_symbols">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_symbols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of atomic symbols&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">symbol</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span></div>
-
-    
-<div class="viewcode-block" id="Molecule.get_atomic_numbers">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.get_atomic_numbers">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_atomic_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of atomic numbers&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">number</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span></div>
-
-    
-<div class="viewcode-block" id="Molecule.get_masses">
-<a class="viewcode-back" href="../../api/molecule.html#molgrid.molecule.Molecule.get_masses">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_masses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of atomic masses&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span></div>
-
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get total molecular mass&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>

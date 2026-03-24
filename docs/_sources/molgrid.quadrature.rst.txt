@@ -1,0 +1,13 @@
+molgrid.quadrature
+==================
+
+.. automodule:: molgrid.quadrature
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GaussChebychev
+      Lebedev
+   

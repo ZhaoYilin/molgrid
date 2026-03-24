@@ -1,0 +1,12 @@
+﻿molgrid.moleculargrid
+=====================
+
+.. automodule:: molgrid.moleculargrid
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      MolecularGrid
+   

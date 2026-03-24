@@ -1,0 +1,12 @@
+molgrid.prune
+=============
+
+.. automodule:: molgrid.prune
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Becke
+   

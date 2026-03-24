@@ -1,0 +1,1042 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notebook &mdash; MolGrid 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+
+  
+    <link rel="shortcut icon" href="_static/logo.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]], "processEscapes": true}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="molgrid" href="api/modules.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Notebook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#angular-integration-lebedev-quadrature">Angular Integration (Lebedev Quadrature)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#radial-integration-gauss-chebyshev-quadrature">Radial Integration (Gauss-Chebyshev Quadrature)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gauss-chebyshev-quadrature-for-1-1">Gauss-Chebyshev Quadrature for <span class="math notranslate nohighlight">\([-1, 1]\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gauss-chebyshev-quadrature-for-0-infty">Gauss-Chebyshev Quadrature for <span class="math notranslate nohighlight">\([0, \infty)\)</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#atomic-grid">Atomic Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#molecular-grid">Molecular Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#becke-partitioning-in-molecular-grids">Becke Partitioning in Molecular Grids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core-principle">Core Principle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#switching-function">Switching Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iterative-sharpening">Iterative Sharpening</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#atomic-size-adjustment">Atomic Size Adjustment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">molgrid</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MolGrid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Notebook</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/notebook.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="notebook">
+<h1>Notebook<a class="headerlink" href="#notebook" title="Link to this heading"></a></h1>
+<p>MolGrid provides a flexible and efficient framework for generating numerical integration grids in quantum chemistry calculations. This notebook demonstrates how to build your own molecular grid step by step with Python, using minimal code and third-party libraries. This project does not aim to exhaustively enumerate all available technical approaches; instead, it focuses on one popular scheme which combines angular Lebedev quadrature, radial Gauss-Chebyshev quadrature, and Becke partitioning.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>In molecular Density Functional Theory (DFT), numerical integration is a critical step for achieving both accuracy and efficiency in quantum chemistry calculations. Since most functionals do not admit analytical integrals, numerical integration over a finite spatial grid is required. In practice, the continuous integral is approximated as a weighted sum over discrete grid points:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{\mathbb{R}^3} f(\mathbf{r}) \, d\mathbf{r} \approx \sum_i w_i \, f(\mathbf{r}_i)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{r}_i\)</span> are the grid points and <span class="math notranslate nohighlight">\(w_i\)</span> are the corresponding integration weights. For molecular systems, the integration over <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span> is decomposed into a sum of atom-centered contributions. Specifically, the integral is approximated as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\int_{\mathbb{R}^3} f(\mathbf{r}) \, d\mathbf{r}
+&amp;\approx \sum_n w_n \int f(\mathbf{r}) \, d\mathbf{r} \\
+&amp;\approx \sum_n w_n \int_0^{\infty} \int_{4\pi} f(\mathbf{R}_n, r, \Omega) \, r^2 \, d\Omega \, dr \\
+&amp;\approx \sum_n w_n \sum_{\tau} w_{\tau} r_{\tau}^2 \sum_{\sigma} w_{\sigma}  \, 
+f(\mathbf{R}_n, r_\tau, \Omega_\sigma)
+\end{aligned}
+\end{split}\]</div>
+<p>Here, the total integral is expressed as a weighted sum of atomic-centered integrals over all nuclei. Each atomic contribution is evaluated using accurate radial and angular quadrature schemes, where <span class="math notranslate nohighlight">\(r_\tau\)</span> and <span class="math notranslate nohighlight">\(\Omega_\sigma\)</span> denote the radial and angular grid points, respectively, with corresponding weights <span class="math notranslate nohighlight">\(w_\tau\)</span> and <span class="math notranslate nohighlight">\(w_\sigma\)</span>. The atomic contributions are combined using position- and atom-dependent weight functions <span class="math notranslate nohighlight">\(w_n(\mathbf{r})\)</span>, which ensure a smooth partitioning of space among atoms.</p>
+<div style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin: 16px 0;">
+  <div style="background: #f1f5f9; padding: 12px 20px; border-bottom: 1px solid #e2e8f0;">
+    <strong style="color: #1e293b;">📋 Workflow of Molecular Grid Construction Using the Lebedev-Gauss-Chebyshev-Becke Scheme</strong>
+  </div>
+  <div style="padding: 16px 20px;">
+    <ul style="margin: 0; padding-left: 20px; color: #334155;">
+      <li style="margin: 8px 0;"><em>Quadrature Methods:</em> Lebedev quadrature for angular integration and Gauss–Chebyshev quadrature for radial integration. </li>
+      <li style="margin: 8px 0;"><em>Atomic Grids:</em> Construction of atom-centered grids by combining radial and angular quadratures.</li>
+      <li style="margin: 8px 0;"><em>Molecular Grids:</em> Assembly of molecular grids via Becke partitioning to enable accurate integration over the entire system.</li>      
+    </ul>
+  </div>
+</div>
+<div align="center">
+    <figcaption style="font-size: 16px; font-family: Arial, sans-serif; color: #0d0c0c; margin-top: 20px; margin-bottom: 20px;">
+        Figure 1: Lebedev-Gauss-Chebychev-Becke workflow of molecular grid construction
+    </figcaption>
+    <img src="_static/workflow.png" alt="workflow" width="60%">
+</div></section>
+<section id="angular-integration-lebedev-quadrature">
+<h2>Angular Integration (Lebedev Quadrature)<a class="headerlink" href="#angular-integration-lebedev-quadrature" title="Link to this heading"></a></h2>
+<p>The angular integration over the unit sphere is a fundamental component of molecular grid generation. For a function <span class="math notranslate nohighlight">\(f(\Omega)\)</span> defined on the surface of a sphere, the angular integral is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{S^2} f(\Omega) \, d\Omega = \int_0^{2\pi} \int_0^\pi f(\theta, \phi) \, \sin\theta \, d\theta \, d\phi \approx \sum_{\sigma=1}^{N} w_{\sigma} \, f(\theta_\sigma, \phi_\sigma),
+\]</div>
+<p>where the angular grid points <span class="math notranslate nohighlight">\(\Omega_{\sigma}\)</span> and weights <span class="math notranslate nohighlight">\(w_{\sigma}\)</span> are to be determined. For an ideal scheme, the angular integration points should be distributed over the surface of the sphere as uniformly as possible. A perfectly uniform distribution is provided by the vertices or the face centroids of a regular polyhedron. Lebedev and Laikov developed a highly efficient set of quadrature points that are invariant under the octahedral rotation group with inversion. Consequently, the vast majority of modern quantum chemistry programs now utilize Lebedev quadrature for angular integration when handling DFT problems.</p>
+<p>Each Lebedev grid is characterized by a fixed number of angular quadrature points <span class="math notranslate nohighlight">\(N_\Omega \approx (L + 1)^2 / 3\)</span>, which exactly integrate spherical harmonics up to a maximum degree <span class="math notranslate nohighlight">\(L\)</span>. These fixed-size sets, known as rules, are listed in Table 1.</p>
+<style>
+    table {
+        margin: 1em auto;
+        border-collapse: collapse;
+    }
+    th {
+        background-color: #f2f2f2;
+        border-bottom: 2px solid #ddd;
+        padding: 8px 12px;
+        text-align: center;
+    }
+    td {
+        border-bottom: 1px solid #eee;
+        padding: 6px 12px;
+        text-align: center;
+    }
+</style>
+<p><strong>Table 1:</strong> Lebedev angular quadrature grids: maximum degree L and corresponding number of angular grid points <span class="math notranslate nohighlight">\(N_\Omega\)</span>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(L\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(N_\Omega\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(L\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(N_\Omega\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(L\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(N_\Omega\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(L\)</span></p></th>
+<th class="head text-center"><p><span class="math notranslate nohighlight">\(N_\Omega\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>3</p></td>
+<td class="text-center"><p>6</p></td>
+<td class="text-center"><p>19</p></td>
+<td class="text-center"><p>146</p></td>
+<td class="text-center"><p>41</p></td>
+<td class="text-center"><p>590</p></td>
+<td class="text-center"><p>89</p></td>
+<td class="text-center"><p>2702</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>5</p></td>
+<td class="text-center"><p>14</p></td>
+<td class="text-center"><p>21</p></td>
+<td class="text-center"><p>170</p></td>
+<td class="text-center"><p>47</p></td>
+<td class="text-center"><p>770</p></td>
+<td class="text-center"><p>95</p></td>
+<td class="text-center"><p>3074</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>7</p></td>
+<td class="text-center"><p>26</p></td>
+<td class="text-center"><p>23</p></td>
+<td class="text-center"><p>194</p></td>
+<td class="text-center"><p>53</p></td>
+<td class="text-center"><p>974</p></td>
+<td class="text-center"><p>101</p></td>
+<td class="text-center"><p>3470</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>9</p></td>
+<td class="text-center"><p>38</p></td>
+<td class="text-center"><p>25</p></td>
+<td class="text-center"><p>230</p></td>
+<td class="text-center"><p>59</p></td>
+<td class="text-center"><p>1202</p></td>
+<td class="text-center"><p>107</p></td>
+<td class="text-center"><p>3890</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>11</p></td>
+<td class="text-center"><p>50</p></td>
+<td class="text-center"><p>27</p></td>
+<td class="text-center"><p>266</p></td>
+<td class="text-center"><p>65</p></td>
+<td class="text-center"><p>1454</p></td>
+<td class="text-center"><p>113</p></td>
+<td class="text-center"><p>4334</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>13</p></td>
+<td class="text-center"><p>74</p></td>
+<td class="text-center"><p>29</p></td>
+<td class="text-center"><p>302</p></td>
+<td class="text-center"><p>71</p></td>
+<td class="text-center"><p>1730</p></td>
+<td class="text-center"><p>119</p></td>
+<td class="text-center"><p>4802</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>15</p></td>
+<td class="text-center"><p>86</p></td>
+<td class="text-center"><p>31</p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>77</p></td>
+<td class="text-center"><p>2030</p></td>
+<td class="text-center"><p>125</p></td>
+<td class="text-center"><p>5294</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>17</p></td>
+<td class="text-center"><p>110</p></td>
+<td class="text-center"><p>35</p></td>
+<td class="text-center"><p>434</p></td>
+<td class="text-center"><p>83</p></td>
+<td class="text-center"><p>2354</p></td>
+<td class="text-center"><p>131</p></td>
+<td class="text-center"><p>5810</p></td>
+</tr>
+</tbody>
+</table>
+<p>In practice, for computational efficiency, these values are typically precomputed and read directly from storage. These precomputed values can be found at the following download link. Please note that the angular weights provided below are normalized to unity (<span class="math notranslate nohighlight">\(\sum w_{\sigma} = 1\)</span>), and integrating over the entire spherical surface requires an additional factor of <span class="math notranslate nohighlight">\(4\pi\)</span>.</p>
+<div align="center">
+    <a href="_static/lebedev.zip" download="lebedev.zip" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    ">
+        📥 Download the Lebedev quadrature data (.csv) here.
+    </a>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lebedev</span>
+
+<span class="c1"># Initialize Lebedev object</span>
+<span class="n">lebedev</span> <span class="o">=</span> <span class="n">Lebedev</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">project_to_2d</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project 3D coordinates to 2D plane&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">projection</span> <span class="o">==</span> <span class="s1">&#39;xy&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">projection</span> <span class="o">==</span> <span class="s1">&#39;xz&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">projection</span> <span class="o">==</span> <span class="s1">&#39;yz&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># Define different Lebedev quadrature degrees</span>
+<span class="n">lebedev_levels</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Lebedev-5 (26 pts)&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;Lebedev-7 (50 pts)&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s1">&#39;Lebedev-11 (86 pts)&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s1">&#39;Lebedev-17 (146 pts)&#39;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="s1">&#39;Lebedev-23 (194 pts)&#39;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+    <span class="s1">&#39;Lebedev-29 (302 pts)&#39;</span><span class="p">:</span> <span class="mi">29</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Create figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lebedev_levels</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">idx</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Generate Lebedev grid points and weights</span>
+        <span class="n">coords</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">lebedev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
+        
+        <span class="c1"># Project to xy-plane</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        
+        <span class="c1"># Verify weights are positive</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">weights</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Weights should be positive, got min: </span><span class="si">{</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        
+        <span class="c1"># Check weight sum - should be 4π for surface area or normalized to 1</span>
+        <span class="n">weight_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+        
+        
+        <span class="c1"># Plot grid points: color = weights, size = quadrature weight</span>
+        <span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> 
+                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        
+        <span class="c1"># Add unit circle</span>
+        <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> 
+                           <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+        
+        <span class="c1"># Add radial lines from origin to points (only for points with significant weights)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="si">}</span><span class="s1"> points</span><span class="se">\n</span><span class="s1">Sum of weights: </span><span class="si">{</span><span class="n">weight_sum</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;weights&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error for degree </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Not available</span><span class="se">\n</span><span class="s1">for degree </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Lebedev Quadrature Grids on Unit Sphere (xy-plane projection)</span><span class="se">\n</span><span class="s1">Point size = quadrature weight, Color = weights&#39;</span><span class="p">,</span> 
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c5511c4b4fd183cc89fe5a0c5312e4abc9cd99307f06fb3afc720966ff248e0a.png" src="_images/c5511c4b4fd183cc89fe5a0c5312e4abc9cd99307f06fb3afc720966ff248e0a.png" />
+</div>
+</div>
+</section>
+<section id="radial-integration-gauss-chebyshev-quadrature">
+<h2>Radial Integration (Gauss-Chebyshev Quadrature)<a class="headerlink" href="#radial-integration-gauss-chebyshev-quadrature" title="Link to this heading"></a></h2>
+<p>Unlike Lebedev quadrature, which dominates the choice of angular integration when handling DFT problems, there are few competitive quadrature rules for radial integration. This note is not intended to exhaustively list all the available quadrature rules, but rather to introduce only one of the most popular: Gauss-Chebyshev quadrature for radial integration.</p>
+<section id="gauss-chebyshev-quadrature-for-1-1">
+<h3>Gauss-Chebyshev Quadrature for <span class="math notranslate nohighlight">\([-1, 1]\)</span><a class="headerlink" href="#gauss-chebyshev-quadrature-for-1-1" title="Link to this heading"></a></h3>
+<p>Gauss–Chebyshev quadrature of the second kind provides an approximate solution to definite integrals of the form</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-1}^{1} \sqrt{1-x^2} \, f(x) \, dx \approx \sum_{\tau=1}^{N} w_{\tau} \, f(x_{\tau}).
+\]</div>
+<p>This quadrature rule is exact for all polynomials of degree up to <span class="math notranslate nohighlight">\(2N-1\)</span>. The evaluation points <span class="math notranslate nohighlight">\(x_{\tau}\)</span> for quadrature order <span class="math notranslate nohighlight">\(N\)</span> are the roots of the Chebyshev polynomial of the second kind <span class="math notranslate nohighlight">\(U_N(x)\)</span>, given by</p>
+<div class="math notranslate nohighlight">
+\[
+x_{\tau} = \cos\left( \frac{\tau \pi}{N+1} \right), \quad \tau = 1, 2, \dots, N.
+\]</div>
+<p>The associated weights <span class="math notranslate nohighlight">\(w_{\tau}\)</span> are</p>
+<div class="math notranslate nohighlight">
+\[
+w_{\tau} = \frac{\pi}{N+1} \sin^2\left( \frac{\tau \pi}{N+1} \right), \quad \tau = 1, 2, \dots, N.
+\]</div>
+<p>The Chebyshev polynomials of the second kind <span class="math notranslate nohighlight">\(U_N(x)\)</span> are orthogonal with respect to the weight function <span class="math notranslate nohighlight">\(\sqrt{1-x^2}\)</span> over <span class="math notranslate nohighlight">\([-1, 1]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-1}^{1} \sqrt{1-x^2} \, U_M(x) \, U_N(x) \, dx = \frac{\pi}{2} \, \delta_{MN}.
+\]</div>
+<p>This orthogonality ensures optimal convergence properties for the quadrature rule. As a consequence,</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{\tau=1}^{N} w_{\tau} = \frac{\pi}{2}.
+\]</div>
+</section>
+<section id="gauss-chebyshev-quadrature-for-0-infty">
+<h3>Gauss-Chebyshev Quadrature for <span class="math notranslate nohighlight">\([0, \infty)\)</span><a class="headerlink" href="#gauss-chebyshev-quadrature-for-0-infty" title="Link to this heading"></a></h3>
+<p>For radial integration in molecular DFT problems, which spans the improper interval <span class="math notranslate nohighlight">\([0, \infty)\)</span>, Gauss–Chebyshev quadrature of the second kind is employed with a suitable variable transformation. This transformation maps the finite domain <span class="math notranslate nohighlight">\([-1, 1]\)</span> to the infinite interval <span class="math notranslate nohighlight">\([0, \infty)\)</span> via</p>
+<div class="math notranslate nohighlight">
+\[
+r = R_{\text{scale}} \left( \frac{1+x}{1-x} \right),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{\text{scale}}\)</span> is taken as half the Bragg–Slater radius.</p>
+<div align="center">
+    <figcaption style="font-size: 16px; font-family: Arial, sans-serif; color: #0a0a0a; margin-top: 30px; margin-bottom: 20px;">
+        Figure 2: Bragg–Slater empirically measured covalent radii for the elements (Ångstroms)
+    </figcaption>
+    <img src="_static/bragg_slater.png" alt="workflow" width="80%">
+</div>
+<div align="center">
+    <a href="_static/periodic_table.csv" download="periodic_table.csv" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    ">
+        📥 Download the Bragg–Slater empirically measured covalent radii data (.csv) here.
+    </a>
+</div>
+<p>Using the coordinate transformation, the radial integral becomes</p>
+<div class="math notranslate nohighlight">
+\[
+\int_0^\infty r^2 f(r) \, dr \approx \sum_{\tau=1}^N w_{\tau} \, r_{\tau}^2 \, f(r_{\tau}), 
+\]</div>
+<p>where the weights <span class="math notranslate nohighlight">\(w_{\tau}\)</span> are given by</p>
+<div class="math notranslate nohighlight">
+\[
+w_{\tau} = \frac{\pi}{N+1} \sin^2 \left( \frac{\pi}{N+1} \ \tau \right) \frac{2R_{scale} }{\sqrt{1 - x_{\tau}^2}(1 - x_{\tau})^2}, \quad \tau = 1, \cdots, N
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.quadrature</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussChebychev</span>
+
+<span class="c1"># Set style for better visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;serif&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="c1"># Create Gauss-Chebyshev quadrature object</span>
+<span class="n">chebychev</span> <span class="o">=</span> <span class="n">GaussChebychev</span><span class="p">()</span>
+
+<span class="c1"># Create 2x1 subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">orders</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">]</span>
+
+<span class="c1"># Top plot: Finite domain (Chebyshev quadrature on [-1, 1])</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">points</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">chebychev</span><span class="o">.</span><span class="n">finite</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">y_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">25</span><span class="p">)</span>  <span class="c1"># Normalize y position</span>
+    
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;N=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelleft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Coordinate&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Finite Domain: Gauss-Chebyshev Quadrature on [-1, 1]&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Bottom plot: Semi-infinite domain (Radial quadrature)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">orders</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">points</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">chebychev</span><span class="o">.</span><span class="n">semi_infinite</span><span class="p">(</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">y_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">25</span><span class="p">)</span>  <span class="c1"># Normalize y position</span>
+    
+    <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;N=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Adjust based on point distribution</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelleft</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Coordinate (log scale)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Semi-Infinite Domain: Gauss-Chebyshev Quadrature on $[0, \infty)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Add overall title</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Gauss-Chebyshev Quadrature Point Distributions for Different Orders&#39;</span><span class="p">,</span> 
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4cdb475af6ed94ec7504d368371dd3d31a1ddcbbd827420687ea5d34e5b52121.png" src="_images/4cdb475af6ed94ec7504d368371dd3d31a1ddcbbd827420687ea5d34e5b52121.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="atomic-grid">
+<h2>Atomic Grid<a class="headerlink" href="#atomic-grid" title="Link to this heading"></a></h2>
+<p>With the radial and angular quadrature schemes established, we can now combine them to create integration grids for individual atoms. Specifically, for a given atomic center located at <span class="math notranslate nohighlight">\(\mathbf{R}_n\)</span>, the radial quadrature yields a set of <span class="math notranslate nohighlight">\(N_{\text{rad}}\)</span> radial points <span class="math notranslate nohighlight">\(\{r_{\tau}\}_{\tau=1}^{N_{\text{rad}}}\)</span> with associated weights <span class="math notranslate nohighlight">\(\{w_{\tau}^{\text{rad}}\}_{\tau=1}^{N_{\text{rad}}}\)</span>, while the angular quadrature provides <span class="math notranslate nohighlight">\(N_{\text{ang}}\)</span> angular points <span class="math notranslate nohighlight">\(\{\Omega_{\sigma}\}_{\sigma=1}^{N_{\text{ang}}}\)</span> on the unit sphere with weights <span class="math notranslate nohighlight">\(\{w_{\sigma}^{\text{ang}}\}_{\sigma=1}^{N_{\text{ang}}}\)</span>. The composite atomic grid is then defined as the tensor product of these sets:</p>
+<div class="math notranslate nohighlight">
+\[
+\{ \mathbf{r}_{\tau\sigma} \} = \{ \mathbf{R}_n + r_\tau \Omega_\sigma \}, \quad w_{\tau\sigma} = w_\tau^{\text{rad}} \cdot w_\sigma^{\text{ang}} \cdot r_\tau^2,
+\]</div>
+<p>where the <span class="math notranslate nohighlight">\(r^2\)</span> factor arises from the volume element <span class="math notranslate nohighlight">\(d\mathbf{r} = r^2 \, dr \, d\Omega\)</span> in spherical coordinates. This construction ensures that the integration over the atomic domain accurately approximates the three-dimensional integral of any function <span class="math notranslate nohighlight">\(f(\mathbf{r})\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{\mathbb{R}^3} f(\mathbf{r}) \, d\mathbf{r} \approx \sum_{\tau=1}^{N_{\text{rad}}} \sum_{\sigma=1}^{N_{\text{ang}}} w_{\tau\sigma} \, f(\mathbf{r}_{\tau\sigma}).
+\]</div>
+<div style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin: 16px 0;">
+  <div style="background: #f1f5f9; padding: 12px 20px; border-bottom: 1px solid #e2e8f0;">
+    <strong style="color: #1e293b;">📋 Performance Considerations</strong>
+  </div>
+  <div style="padding: 16px 20px;">
+    <ul style="margin: 0; padding-left: 20px; color: #334155;">
+      <li style="margin: 8px 0;"><strong>Radial fineness</strong>: controls the number of integration points in the radial direction, affecting core-valence region accuracy.</li>
+      <li style="margin: 8px 0;"><strong>Angular fineness</strong> (Lebedev order): determines the number of angular points, crucial for anisotropic electron densities.</li>
+      <li style="margin: 8px 0;"><strong>Total grid points</strong>: scales approximately as <em>N<sub>rad</sub> × N<sub>Ω</sub></em>, with typical molecular systems containing 10⁵–10⁷ grid points.</li>
+      <li style="margin: 8px 0;"><strong>Adaptive refinement</strong>: can be applied by using finer grids near nuclei where electron density varies rapidly, and coarser grids in valence and tail regions.</li>
+    </ul>
+  </div>
+</div>
+<p>Atomic grids support adaptive grid refinement strategies to balance accuracy and computational efficiency. The choice of grid fineness directly impacts both the accuracy of numerical integration and the overall computational cost. Table 2 summarizes typical grid configurations and their recommended applications.</p>
+<style>
+    table {
+        margin: 1em auto;
+        border-collapse: collapse;
+    }
+    th {
+        background-color: #f2f2f2;
+        border-bottom: 2px solid #ddd;
+        padding: 8px 12px;
+        text-align: center;
+    }
+    td {
+        border-bottom: 1px solid #eee;
+        padding: 6px 12px;
+        text-align: center;
+    }
+</style>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Grid Type</p></th>
+<th class="head"><p>Radial Points</p></th>
+<th class="head"><p>Angular Points</p></th>
+<th class="head"><p>Accuracy</p></th>
+<th class="head"><p>Cost</p></th>
+<th class="head"><p>Best Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Coarse</p></td>
+<td><p>50</p></td>
+<td><p>26</p></td>
+<td><p>Low</p></td>
+<td><p>Very Fast</p></td>
+<td><p>Geometry optimization, initial SCF cycles</p></td>
+</tr>
+<tr class="row-odd"><td><p>Medium</p></td>
+<td><p>75</p></td>
+<td><p>110</p></td>
+<td><p>Good</p></td>
+<td><p>Fast</p></td>
+<td><p>Single-point energies, standard DFT calculations</p></td>
+</tr>
+<tr class="row-even"><td><p>Fine</p></td>
+<td><p>100</p></td>
+<td><p>194</p></td>
+<td><p>High</p></td>
+<td><p>Moderate</p></td>
+<td><p>Property calculations (dipole moments, NMR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Very Fine</p></td>
+<td><p>150</p></td>
+<td><p>302</p></td>
+<td><p>Very High</p></td>
+<td><p>Slow</p></td>
+<td><p>Benchmarking, reaction barrier calculations</p></td>
+</tr>
+<tr class="row-even"><td><p>Ultra Fine</p></td>
+<td><p>200</p></td>
+<td><p>434</p></td>
+<td><p>Excellent</p></td>
+<td><p>Very Slow</p></td>
+<td><p>Converged results, high-precision studies</p></td>
+</tr>
+</tbody>
+</table>
+<p>For practical applications, most quantum chemistry programs employ element-specific grid definitions to account for the different electronic structures and spatial extents of atoms. Table 3 shows the default grid settings used in PySCF, which adopt a balanced approach between accuracy and efficiency across the periodic table.</p>
+<p><strong>Table 3:</strong> Default atomic grid parameters in PySCF by element group.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Elements</p></th>
+<th class="head"><p>Radial Fineness</p></th>
+<th class="head"><p>Angular Fineness</p></th>
+<th class="head"><p>Total Points (approx.)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>H–He</p></td>
+<td><p>50</p></td>
+<td><p>302</p></td>
+<td><p>~15,100</p></td>
+</tr>
+<tr class="row-odd"><td><p>Li–Ne</p></td>
+<td><p>75</p></td>
+<td><p>302</p></td>
+<td><p>~22,650</p></td>
+</tr>
+<tr class="row-even"><td><p>Na–Ar</p></td>
+<td><p>80</p></td>
+<td><p>434</p></td>
+<td><p>~34,720</p></td>
+</tr>
+<tr class="row-odd"><td><p>K–Kr</p></td>
+<td><p>90</p></td>
+<td><p>434</p></td>
+<td><p>~39,060</p></td>
+</tr>
+<tr class="row-even"><td><p>Rb–Xe</p></td>
+<td><p>95</p></td>
+<td><p>434</p></td>
+<td><p>~41,230</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cs–Rn</p></td>
+<td><p>100</p></td>
+<td><p>434</p></td>
+<td><p>~43,400</p></td>
+</tr>
+</tbody>
+</table>
+<p>These default settings are designed to provide a good balance between accuracy and computational cost for routine DFT calculations. For high-precision work, users may increase the radial fineness and angular order, while for exploratory calculations or large systems, coarser grids can significantly reduce computational time with minimal loss of accuracy.</p>
+<p>For most production calculations, the default PySCF settings (or equivalent in other programs) offer an optimal trade-off, though users should perform grid convergence tests for systems where high accuracy is critical.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">dft</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyscf.dft</span><span class="w"> </span><span class="kn">import</span> <span class="n">numint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.atomicgrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">AtomicGrid</span>
+
+<span class="c1"># Create PySCF molecule (same geometry as our MolGrid molecule)</span>
+<span class="n">mol_pyscf</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">(</span><span class="n">atom</span><span class="o">=</span><span class="s1">&#39;C 0 0 0&#39;</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;6-31g&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Run DFT calculation to get the electron density</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">RKS</span><span class="p">(</span><span class="n">mol_pyscf</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="n">rdm1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">()</span>  <span class="c1"># Get the 1-electron reduced density matrix</span>
+
+<span class="c1"># Create a carbon atom</span>
+<span class="n">mol_molgrid</span> <span class="o">=</span> <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># Create atomic grid with 75 radial shells and 110 angular points</span>
+<span class="n">grid_molgrid</span> <span class="o">=</span> <span class="n">AtomicGrid</span><span class="p">(</span><span class="n">mol_molgrid</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">110</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Atomic grid:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Number of points: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grid_molgrid</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Coordinates shape: </span><span class="si">{</span><span class="n">grid_molgrid</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Weights shape: </span><span class="si">{</span><span class="n">grid_molgrid</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Evaluate atomic orbitals on our grid</span>
+<span class="n">ao</span> <span class="o">=</span> <span class="n">numint</span><span class="o">.</span><span class="n">eval_ao</span><span class="p">(</span><span class="n">mol_pyscf</span><span class="p">,</span> <span class="n">grid_molgrid</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Calculate electron density at each grid point</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">numint</span><span class="o">.</span><span class="n">eval_rho</span><span class="p">(</span><span class="n">mol_pyscf</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">rdm1</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">&#39;LDA&#39;</span><span class="p">)</span>
+
+<span class="c1"># Integrate electron density over the entire grid</span>
+<span class="n">number_of_electrons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">grid_molgrid</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Electron density calculation results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Calculated number of electrons: </span><span class="si">{</span><span class="n">number_of_electrons</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Expected number of electrons: 6.000000&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Error: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">number_of_electrons</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">6.0</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualize the atomic grid</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Plot 1: Full atomic grid (3D)</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">grid_molgrid</span><span class="o">.</span><span class="n">coords</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">grid_molgrid</span><span class="o">.</span><span class="n">weights</span>
+
+<span class="c1"># Color by weight magnitude</span>
+<span class="n">sc1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> 
+                  <span class="n">c</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (Bohr)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (Bohr)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Z (Bohr)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;3D Visualization&#39;</span><span class="p">)</span>
+<span class="n">cbar1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">cbar1</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;Integration Weight&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot 2: 2D projection onto XY plane</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">sc2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> 
+                  <span class="n">c</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (Bohr)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (Bohr)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;XY Plane Projection Visualization&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">cbar2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">cbar2</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Carbon Atomic Grid&#39;</span><span class="p">,</span> 
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Atomic grid:
+  Number of points: 8250
+  Coordinates shape: (8250, 3)
+  Weights shape: (8250,)
+
+Electron density calculation results:
+  Calculated number of electrons: 6.000000
+  Expected number of electrons: 6.000000
+  Error: 0.000000
+</pre></div>
+</div>
+<img alt="_images/5e27a60e53202fca27b1501f719e01da6395f6c56200f29bcca533921ddfe48a.png" src="_images/5e27a60e53202fca27b1501f719e01da6395f6c56200f29bcca533921ddfe48a.png" />
+</div>
+</div>
+</section>
+<section id="molecular-grid">
+<h2>Molecular Grid<a class="headerlink" href="#molecular-grid" title="Link to this heading"></a></h2>
+<p>Now we are at the last step of the tutorial: combining atomic grids from all atoms into a molecular grid. Recall the equation we introduced in the overview. Besides putting all the atomic grids together, we also need to use Becke partitioning to assign appropriate weights <span class="math notranslate nohighlight">\(w_n\)</span> to each grid point.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\int_{\mathbb{R}^3} f(\mathbf{r}) \, d\mathbf{r}
+&amp;\approx \sum_n w_n \int f(\mathbf{r}) \, d\mathbf{r} \\
+&amp;\approx \sum_n w_n \int_0^{\infty} \int_{4\pi} f(\mathbf{R}_n, r, \Omega) \, r^2 \, d\Omega \, dr \\
+&amp;\approx \sum_n w_n \sum_{\tau} w_{\tau} r_{\tau}^2 \sum_{\sigma} w_{\sigma}  \, 
+f(\mathbf{R}_n, r_\tau, \Omega_\sigma)
+\end{aligned}
+\end{split}\]</div>
+<p>But before we start, let’s simply combine all the atomic grids together and take a look at the distribution of grid points in space.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">Atom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.moleculargrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularGrid</span>
+
+<span class="c1"># Create benzene molecule</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.39676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.20920</span><span class="p">,</span> <span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.20920</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.39676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.20920</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.20920</span><span class="p">,</span> <span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.46676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.13620</span><span class="p">,</span> <span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.13620</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.46676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.13620</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.13620</span><span class="p">,</span> <span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+<span class="p">]</span>
+<span class="n">benzene_molgrid</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+<span class="c1"># Create molecular grids with and without partition</span>
+<span class="n">grid_without_partition</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">benzene_molgrid</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">302</span><span class="p">,</span> <span class="n">partition_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+
+<span class="c1"># Create figure</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">tab20</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">benzene_molgrid</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">atomic_grids</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid_without_partition</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">atomic_grids</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">atomic_grids</span><span class="o">.</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> 
+                   <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">rasterized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (Å)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y (Å)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Grid Point Positions</span><span class="se">\n</span><span class="s1">(Colored by atom index)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b27ec5c6169a5cd76258ad901370245a09304b3755f86bef9ae7d418817eaf54.png" src="_images/b27ec5c6169a5cd76258ad901370245a09304b3755f86bef9ae7d418817eaf54.png" />
+</div>
+</div>
+<section id="becke-partitioning-in-molecular-grids">
+<h3>Becke Partitioning in Molecular Grids<a class="headerlink" href="#becke-partitioning-in-molecular-grids" title="Link to this heading"></a></h3>
+<p>Simply concatenating individual atomic grids to form a pseudo-molecular grid leads to double-counting of regions where atomic grids overlap, resulting in incorrect integration of molecular properties. The Becke partitioning scheme ensures a smooth and physically meaningful distribution of weights across the molecular grid, thereby avoiding double counting and enabling accurate evaluation of electron density-dependent quantities.</p>
+<section id="core-principle">
+<h4>Core Principle<a class="headerlink" href="#core-principle" title="Link to this heading"></a></h4>
+<p>The molecular weight function for atom <span class="math notranslate nohighlight">\(A\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+w_A(\mathbf{r}) = \frac{p_A(\mathbf{r})}{\sum_B p_B(\mathbf{r})}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_A(\mathbf{r})\)</span> is the atomic weight function:</p>
+<div class="math notranslate nohighlight">
+\[
+p_A(\mathbf{r}) = \prod_{B \neq A} s(\mu_{AB})
+\]</div>
+<p>with:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu_{AB} = \frac{|\mathbf{r} - \mathbf{R}_A| - |\mathbf{r} - \mathbf{R}_B|}{R_{AB}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(R_{AB} = |\mathbf{R}_A - \mathbf{R}_B|\)</span> is the interatomic distance</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(\mu)\)</span> is a smooth switching function</p></li>
+</ul>
+<p>The weight <span class="math notranslate nohighlight">\(w_A(\mathbf{r})\)</span> satisfies <span class="math notranslate nohighlight">\(\sum_A w_A(\mathbf{r}) = 1\)</span> for all grid points, ensuring a complete partition of space.</p>
+</section>
+<section id="switching-function">
+<h4>Switching Function<a class="headerlink" href="#switching-function" title="Link to this heading"></a></h4>
+<p>The switching function <span class="math notranslate nohighlight">\(s(\mu)\)</span> ensures smooth transitions between atomic regions. A common polynomial approximation is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+s(\mu) = 
+\begin{cases}
+1, &amp; \mu \le -1 \\
+\frac{1}{2} - \frac{3}{4}\mu + \frac{1}{4}\mu^3, &amp; -1 &lt; \mu &lt; 1 \\
+0, &amp; \mu \ge 1
+\end{cases}
+\end{split}\]</div>
+<p>This function transitions from 1 (near atom A) to 0 (near atom B), with a smooth cubic spline in the intermediate region.</p>
+</section>
+<section id="iterative-sharpening">
+<h4>Iterative Sharpening<a class="headerlink" href="#iterative-sharpening" title="Link to this heading"></a></h4>
+<p>Becke introduced an iterative sharpening procedure to make the atomic boundaries more distinct:</p>
+<div class="math notranslate nohighlight">
+\[
+f_k = \frac{1}{2}f_{k-1}(3 - f_{2k-1})
+\]</div>
+<p>starting from <span class="math notranslate nohighlight">\(f_0 = \mu_{AB}\)</span> and iterating <span class="math notranslate nohighlight">\(k\)</span> times. The smoothing function becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+s_k(\mu_{AB}) = \frac{1}{2}[1 - f_k(\mu_{AB})]
+\]</div>
+<p>The stiffness parameter is typically set to <span class="math notranslate nohighlight">\(k = 3\)</span>, providing a soft but well-defined atomic partition.</p>
+</section>
+<section id="atomic-size-adjustment">
+<h4>Atomic Size Adjustment<a class="headerlink" href="#atomic-size-adjustment" title="Link to this heading"></a></h4>
+<p>For heteronuclear molecules, Becke proposed an atomic size adjustment to account for different atomic radii. The correction term is added to <span class="math notranslate nohighlight">\(\mu_{AB}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\nu_{AB} = \frac{1}{4}(1 - \mu_{AB}^2)(1 - \chi_{AB}^2)/\chi_{AB}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\chi_{AB}\)</span> is the ratio of atomic radii of atoms A and B. Common radius choices include Bragg-Slater covalent radii.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogNorm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">dft</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span><span class="p">,</span> <span class="n">Atom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">molgrid.moleculargrid</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularGrid</span>
+
+<span class="c1"># Create benzene molecule</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.39676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.20920</span><span class="p">,</span> <span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.20920</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.39676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.20920</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.20920</span><span class="p">,</span> <span class="mf">0.69838</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.46676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.13620</span><span class="p">,</span> <span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.13620</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.46676</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.13620</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+    <span class="n">Atom</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.13620</span><span class="p">,</span> <span class="mf">1.23338</span><span class="p">,</span> <span class="mf">0.00000</span><span class="p">]),</span>
+<span class="p">]</span>
+<span class="n">benzene_molgrid</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+<span class="c1"># Create PySCF molecule object for calculations</span>
+<span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">(</span><span class="n">atom</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    C  0.00000  1.39676  0.00000</span>
+<span class="s1">    C  1.20920  0.69838  0.00000</span>
+<span class="s1">    C  1.20920 -0.69838  0.00000</span>
+<span class="s1">    C  0.00000 -1.39676  0.00000</span>
+<span class="s1">    C -1.20920 -0.69838  0.00000</span>
+<span class="s1">    C -1.20920  0.69838  0.00000</span>
+<span class="s1">    H  0.00000  2.46676  0.00000</span>
+<span class="s1">    H  2.13620  1.23338  0.00000</span>
+<span class="s1">    H  2.13620 -1.23338  0.00000</span>
+<span class="s1">    H  0.00000 -2.46676  0.00000</span>
+<span class="s1">    H -2.13620 -1.23338  0.00000</span>
+<span class="s1">    H -2.13620  1.23338  0.00000</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;6-31g&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Run DFT calculation to get electron density</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">RKS</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="n">rdm1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">()</span>
+
+<span class="c1"># Create grids</span>
+<span class="n">grid_no_partition</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">benzene_molgrid</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">302</span><span class="p">,</span> <span class="n">partition_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">grid_partition</span> <span class="o">=</span> <span class="n">MolecularGrid</span><span class="p">(</span><span class="n">benzene_molgrid</span><span class="p">,</span> <span class="n">nshells</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">nangpts</span><span class="o">=</span><span class="mi">302</span><span class="p">,</span> <span class="n">partition_method</span><span class="o">=</span><span class="s1">&#39;becke&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">grid_no_partition</span><span class="p">,</span> <span class="n">grid_partition</span><span class="p">],</span>
+                           <span class="p">[</span><span class="s1">&#39;No Partition&#39;</span><span class="p">,</span> <span class="s1">&#39;With Becke Partition&#39;</span><span class="p">]):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ag</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">coords</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ag</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">ag</span><span class="o">.</span><span class="n">weights</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.002</span> <span class="ow">and</span> <span class="n">weight</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">hist</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">]],</span> <span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Integrated Weight Density&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (Å)&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y (Å)&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Weighted Grid Density</span><span class="se">\n</span><span class="s1">(</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1">, log scale)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Benzene - Comparison of Grid Partition Methods</span><span class="se">\n</span><span class="s1">Radial: 75, Angular: 302 | Z≈0 plane, log scale&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;benzene_grid_comparison.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">ao</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">numint</span><span class="o">.</span><span class="n">eval_ao</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">grid_partition</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">numint</span><span class="o">.</span><span class="n">eval_rho</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">rdm1</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">&#39;LDA&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create a table to compare atomic contributions</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparison of Atomic Contributions to Electron Density&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;No Partition&#39;</span><span class="si">:</span><span class="s2">^40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;Becke Partition&#39;</span><span class="si">:</span><span class="s2">^40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate contributions for both methods</span>
+<span class="n">contributions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">grid</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;No partition&quot;</span><span class="p">,</span> <span class="n">grid_no_partition</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Becke partition&quot;</span><span class="p">,</span> <span class="n">grid_partition</span><span class="p">)]:</span>
+    <span class="n">atom_contribs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ag</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+        <span class="n">ao</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">numint</span><span class="o">.</span><span class="n">eval_ao</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">ag</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">dft</span><span class="o">.</span><span class="n">numint</span><span class="o">.</span><span class="n">eval_rho</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">ao</span><span class="p">,</span> <span class="n">rdm1</span><span class="p">,</span> <span class="n">xctype</span><span class="o">=</span><span class="s1">&#39;LDA&#39;</span><span class="p">)</span>
+        <span class="n">atom_elec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">ag</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">atom_elec</span>
+        <span class="n">atom_contribs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">ag</span><span class="o">.</span><span class="n">atom</span><span class="o">.</span><span class="n">symbol</span><span class="p">,</span> <span class="n">atom_elec</span><span class="p">))</span>
+    <span class="n">contributions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_contribs</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+
+<span class="c1"># Display the table with proper alignment</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">contributions</span><span class="p">[</span><span class="s2">&quot;No partition&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">atom_no</span> <span class="o">=</span> <span class="n">contributions</span><span class="p">[</span><span class="s2">&quot;No partition&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">atom_becke</span> <span class="o">=</span> <span class="n">contributions</span><span class="p">[</span><span class="s2">&quot;Becke partition&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    
+    <span class="c1"># Format each column with fixed width for alignment</span>
+    <span class="n">left_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Atom </span><span class="si">{</span><span class="n">atom_no</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">atom_no</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">atom_no</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">right_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Atom </span><span class="si">{</span><span class="n">atom_becke</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">atom_becke</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">atom_becke</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">left_col</span><span class="si">:</span><span class="s2">&lt;40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">right_col</span><span class="si">:</span><span class="s2">&lt;40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Format totals with proper alignment</span>
+<span class="n">total_left</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Total: </span><span class="si">{</span><span class="n">contributions</span><span class="p">[</span><span class="s1">&#39;No partition&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">total_right</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Total: </span><span class="si">{</span><span class="n">contributions</span><span class="p">[</span><span class="s1">&#39;Becke partition&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_left</span><span class="si">:</span><span class="s2">&lt;40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">total_right</span><span class="si">:</span><span class="s2">&lt;40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/73d05bf5e1c63014642032a1f80097af7f1613f8768a94bca56db9670790c8c9.png" src="_images/73d05bf5e1c63014642032a1f80097af7f1613f8768a94bca56db9670790c8c9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparison of Atomic Contributions to Electron Density
+================================================================================
+---------------------------------------- | ----------------------------------------
+              No Partition               |             Becke Partition             
+---------------------------------------- | ----------------------------------------
+Atom 0 (C): 39.251725                    | Atom 0 (C): 1.786046                    
+Atom 1 (C): 38.849467                    | Atom 1 (C): 1.785873                    
+Atom 2 (C): 38.849467                    | Atom 2 (C): 1.785873                    
+Atom 3 (C): 39.251725                    | Atom 3 (C): 1.786046                    
+Atom 4 (C): 38.849467                    | Atom 4 (C): 1.785873                    
+Atom 5 (C): 38.849467                    | Atom 5 (C): 1.785873                    
+Atom 6 (H): 56.643545                    | Atom 6 (H): 5.214395                    
+Atom 7 (H): 44.171468                    | Atom 7 (H): 5.213298                    
+Atom 8 (H): 44.171468                    | Atom 8 (H): 5.213298                    
+Atom 9 (H): 56.643545                    | Atom 9 (H): 5.214395                    
+Atom 10 (H): 44.171468                   | Atom 10 (H): 5.213298                   
+Atom 11 (H): 44.171468                   | Atom 11 (H): 5.213298                   
+---------------------------------------- | ----------------------------------------
+Total: 523.874281                        | Total: 41.997562                        
+---------------------------------------- | ----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="molgrid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, MolGrid Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

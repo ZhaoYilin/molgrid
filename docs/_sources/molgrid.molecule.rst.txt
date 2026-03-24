@@ -1,0 +1,14 @@
+molgrid.molecule
+================
+
+.. automodule:: molgrid.molecule
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Atom
+      Element
+      Molecule
+   

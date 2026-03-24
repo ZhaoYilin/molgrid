@@ -1,0 +1,12 @@
+﻿molgrid.atomicgrid
+==================
+
+.. automodule:: molgrid.atomicgrid
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AtomicGrid
+   
